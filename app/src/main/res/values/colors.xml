@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- Theme Colors -->
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryLight">#484848</color>
+    <color name="colorAccent">#FF6D00</color>
+    <color name="colorAccentLight">#FF9E40</color>
+
+    <!-- General -->
+    <color name="photoPlaceholder">#CCCCCC</color>
+    <color name="dateBackground">#212121</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="iconFavorite">#FF1744</color>
+
+    <!-- Text -->
+    <color name="dateText">#A8A8A8</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
 </resources>

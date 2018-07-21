@@ -38,18 +38,24 @@ dependencies {
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
+    // Google Play Services
+    implementation "com.google.android.gms:play-services-vision:$playServicesVersion"
+
     // Java8 support for Lifecycles
-    implementation "android.arch.lifecycle:common-java8:$rootProject.archLifecycleVersion"
+    implementation "android.arch.lifecycle:common-java8:$archLifecycleVersion"
 
     // ViewModel, LiveData, Persistence
-    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
-    implementation "android.arch.persistence.room:runtime:$rootProject.archLifecycleVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archLifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+    implementation "android.arch.persistence.room:runtime:$archLifecycleVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$archLifecycleVersion"
 
     // RxJava
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
 
     // Test Libraries
     testImplementation 'junit:junit:4.12'
