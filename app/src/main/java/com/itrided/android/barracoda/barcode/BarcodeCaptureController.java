@@ -29,26 +29,39 @@ import android.app.Dialog;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.itrided.android.barracoda.BarcodeScanActivity;
+import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
+import com.itrided.android.barracoda.data.model.api.ApiProduct;
 import com.itrided.android.barracoda.databinding.ContentScanBinding;
+import com.itrided.android.barracoda.product.ProductDetailFragment;
+import com.itrided.android.barracoda.product.ProductViewModel;
 import com.itrided.android.barracoda.ui.camera.CameraSourcePreview;
 import com.itrided.android.barracoda.ui.camera.GraphicOverlay;
 
 import java.io.IOException;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
 
 /**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the
@@ -69,8 +82,12 @@ public final class BarcodeCaptureController implements LifecycleObserver {
     public static final String UseFlash = "UseFlash";
     public static final String BarcodeObject = "Barcode";
 
+    private static final String FRAGMENT_DETAIL_TAG = "FRAGMENT_DETAIL_TAG";
+
     private Activity activity;
     private ContentScanBinding contentScanBinding;
+    private ProductViewModel productViewModel;
+
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
@@ -86,6 +103,7 @@ public final class BarcodeCaptureController implements LifecycleObserver {
     public BarcodeCaptureController(final Activity activity, final ContentScanBinding contentScanBinding) {
         this.activity = activity;
         this.contentScanBinding = contentScanBinding;
+        this.productViewModel = ViewModelProviders.of((FragmentActivity) activity).get(ProductViewModel.class);
 
         mPreview = contentScanBinding.preview;
         mGraphicOverlay = contentScanBinding.graphicOverlay;
@@ -136,9 +154,36 @@ public final class BarcodeCaptureController implements LifecycleObserver {
 
     private BarcodeGraphicTracker.BarcodeUpdateListener getBarcodeUpdateListener() {
         return barcode -> {
-            Log.d(TAG, barcode.rawValue);
-            //todo get item corresponding to barcode and update ViewModel
+            Log.d(TAG, "getBarcodeUpdateListener: " + barcode.rawValue);
+            BarraCodaApp.getRecipeService().getProduct(barcode.rawValue)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<ApiProduct>() {
+                        @Override
+                        public void onSuccess(@Nullable ApiProduct result) {
+                            if (result == null) {
+                                return;
+                            }
+                            productViewModel.setProduct(result);
+                            launchDetailFragment();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            //todo handle error
+                            e.printStackTrace();
+                        }
+                    });
         };
+    }
+
+    private void launchDetailFragment() {
+        final FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        final ProductDetailFragment productDetailFragment = ProductDetailFragment.getInstance();
+
+        transaction.replace(R.id.content_scan, productDetailFragment, FRAGMENT_DETAIL_TAG);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public boolean onTouchEvent(MotionEvent e) {
@@ -233,7 +278,7 @@ public final class BarcodeCaptureController implements LifecycleObserver {
     /**
      * Callback for the result from requesting permissions. This method
      * is invoked for every call on
-     * {@link com.itrided.android.barracoda.ScanActivity#requestPermissions(String[], int)}.
+     * {@link BarcodeScanActivity#requestPermissions(String[], int)}.
      * <p>
      * <strong>Note:</strong> It is possible that the permissions request interaction
      * with the user is interrupted. In this case you will receive empty permissions
@@ -243,7 +288,7 @@ public final class BarcodeCaptureController implements LifecycleObserver {
      * @param grantResults The grant results for the corresponding permissions
      *                     which is either {@link PackageManager#PERMISSION_GRANTED}
      *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
-     * @see com.itrided.android.barracoda.ScanActivity#requestPermissions(String[], int)
+     * @see BarcodeScanActivity#requestPermissions(String[], int)
      */
     public void onRequestPermissionsResult(@NonNull int[] grantResults) {
 

@@ -34,5 +34,8 @@ ext {
 
     rxjavaVersion = '2.1.8'
     rxandroidVersion = '2.0.2'
+    gsonVersion = '2.8.2'
+    retrofitVersion = '2.3.0'
+    retrofitRxjavaAdapterVersion = '1.0.0'
     picassoVersion = '2.71828'
 }

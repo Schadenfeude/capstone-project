@@ -18,15 +18,7 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/app_bar_scan"
-            tools:context=".ScanActivity">
-
-        <TextView
-                android:id="@+id/content_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="@dimen/activity_vertical_margin"
-                tools:text="puppy"/>
+            tools:context=".BarcodeScanActivity">
 
         <com.itrided.android.barracoda.ui.camera.CameraSourcePreview
                 android:id="@+id/preview"
@@ -41,14 +33,5 @@
                     android:layout_height="match_parent"/>
 
         </com.itrided.android.barracoda.ui.camera.CameraSourcePreview>
-
-        <Button
-                android:id="@+id/process_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:padding="@dimen/activity_vertical_margin"
-                android:text="@string/process_barcode"/>
-
     </LinearLayout>
 </layout>

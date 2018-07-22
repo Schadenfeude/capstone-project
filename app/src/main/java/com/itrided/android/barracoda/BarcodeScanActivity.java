@@ -19,10 +19,10 @@ import com.itrided.android.barracoda.databinding.ContentScanBinding;
 
 import static com.itrided.android.barracoda.barcode.BarcodeCaptureController.RC_HANDLE_CAMERA_PERM;
 
-public class ScanActivity extends AppCompatActivity implements
+public class BarcodeScanActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = ScanActivity.class.getSimpleName();
+    private static final String TAG = BarcodeScanActivity.class.getSimpleName();
 
     private ActivityScanBinding activityScanBinding;
     private AppBarScanBinding appBarScanBinding;
