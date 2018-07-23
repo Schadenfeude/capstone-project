@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.itrided.android.barracoda.barcode;
+package com.itrided.android.barcodescanner.ui.barcode;
 
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
 
-import com.itrided.android.barracoda.ui.camera.GraphicOverlay;
+import com.itrided.android.barcodescanner.ui.camera.GraphicOverlay;
 
 /**
  * Factory for creating a tracker and associated graphic to be associated with a new barcode.  The
  * multi-processor uses this factory to create barcode trackers as needed -- one for each barcode.
  */
-class BarcodeTrackerFactory implements MultiProcessor.Factory<Barcode> {
+public class BarcodeTrackerFactory implements MultiProcessor.Factory<Barcode> {
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
     private BarcodeGraphicTracker.BarcodeUpdateListener barcodeUpdateListener;
 
-    BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> mGraphicOverlay,
+    public BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> mGraphicOverlay,
                           BarcodeGraphicTracker.BarcodeUpdateListener listener) {
         this.mGraphicOverlay = mGraphicOverlay;
         this.barcodeUpdateListener = listener;

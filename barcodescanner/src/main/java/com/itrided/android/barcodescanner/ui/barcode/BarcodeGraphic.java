@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.itrided.android.barracoda.barcode;
+package com.itrided.android.barcodescanner.ui.barcode;
 
 import com.google.android.gms.vision.barcode.Barcode;
 
@@ -22,7 +22,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.itrided.android.barracoda.ui.camera.GraphicOverlay;
+import com.itrided.android.barcodescanner.ui.camera.GraphicOverlay;
 
 /**
  * Graphic instance for rendering barcode position, size, and ID within an associated graphic

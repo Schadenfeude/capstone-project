@@ -48,6 +48,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.itrided.android.barcodescanner.ui.barcode.BarcodeGraphic;
+import com.itrided.android.barcodescanner.ui.barcode.BarcodeGraphicTracker;
+import com.itrided.android.barcodescanner.ui.barcode.BarcodeTrackerFactory;
+import com.itrided.android.barcodescanner.ui.camera.CameraSourcePreview;
+import com.itrided.android.barcodescanner.ui.camera.GraphicOverlay;
 import com.itrided.android.barracoda.BarcodeScanActivity;
 import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
@@ -55,8 +60,6 @@ import com.itrided.android.barracoda.data.model.api.ApiProduct;
 import com.itrided.android.barracoda.databinding.ContentScanBinding;
 import com.itrided.android.barracoda.product.ProductDetailFragment;
 import com.itrided.android.barracoda.product.ProductViewModel;
-import com.itrided.android.barracoda.ui.camera.CameraSourcePreview;
-import com.itrided.android.barracoda.ui.camera.GraphicOverlay;
 
 import java.io.IOException;
 

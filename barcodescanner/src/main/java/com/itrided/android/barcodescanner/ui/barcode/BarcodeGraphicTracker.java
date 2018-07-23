@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.itrided.android.barracoda.barcode;
+package com.itrided.android.barcodescanner.ui.barcode;
 
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
@@ -21,7 +21,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 import android.support.annotation.UiThread;
 
-import com.itrided.android.barracoda.ui.camera.GraphicOverlay;
+import com.itrided.android.barcodescanner.ui.camera.GraphicOverlay;
 
 /**
  * Generic tracker which is used for tracking or reading a barcode (and can really be used for
