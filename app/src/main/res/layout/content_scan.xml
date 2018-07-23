@@ -18,7 +18,7 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/app_bar_scan"
-            tools:context=".BarcodeScanActivity">
+            tools:context=".MainActivity">
 
         <com.itrided.android.barcodescanner.ui.camera.CameraSourcePreview
                 android:id="@+id/preview"

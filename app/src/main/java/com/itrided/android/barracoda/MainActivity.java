@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -17,12 +16,12 @@ import com.itrided.android.barracoda.databinding.ActivityScanBinding;
 import com.itrided.android.barracoda.databinding.AppBarScanBinding;
 import com.itrided.android.barracoda.databinding.ContentScanBinding;
 
-import static com.itrided.android.barracoda.barcode.BarcodeCaptureController.RC_HANDLE_CAMERA_PERM;
+import static com.itrided.android.barracoda.permissions.PermissionManager.Permission.CAMERA;
+import static com.itrided.android.barracoda.permissions.PermissionManager.RC_HANDLE_PERM;
 
-public class BarcodeScanActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = BarcodeScanActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private ActivityScanBinding activityScanBinding;
     private AppBarScanBinding appBarScanBinding;
@@ -37,7 +36,8 @@ public class BarcodeScanActivity extends AppCompatActivity implements
         appBarScanBinding = activityScanBinding.appBarScan;
         contentScanBinding = appBarScanBinding.contentScan;
 
-        captureController = new BarcodeCaptureController(this, contentScanBinding);
+        captureController = new BarcodeCaptureController(this,
+                contentScanBinding.preview, contentScanBinding.graphicOverlay);
         getLifecycle().addObserver(captureController);
 
         activityScanBinding.navView.setNavigationItemSelectedListener(this);
@@ -47,18 +47,25 @@ public class BarcodeScanActivity extends AppCompatActivity implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return captureController.onTouchEvent(event);
+        return captureController.onTouchEvent(this, event);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != RC_HANDLE_CAMERA_PERM) {
-            Log.d(TAG, "Got unexpected permission result: " + requestCode);
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            return;
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == RC_HANDLE_PERM) {
+            for (final String permission : permissions) {
+                switch (permission) {
+                    case CAMERA:
+                        captureController.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                        break;
+                }
+            }
         }
 
-        captureController.onRequestPermissionsResult(grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
