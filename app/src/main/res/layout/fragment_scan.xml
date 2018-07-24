@@ -3,21 +3,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Needed to be able to access this layout from app_bar_scan's data binding-->
-    <data>
-
-        <variable
-                name="foo"
-                type="int"/>
-    </data>
-
     <LinearLayout
             android:id="@+id/top_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:showIn="@layout/app_bar_scan"
+            tools:showIn="@layout/app_bar_main"
             tools:context=".MainActivity">
 
         <com.itrided.android.barcodescanner.ui.camera.CameraSourcePreview

@@ -7,15 +7,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
 
-
-
     <!-- Barcode -->
-    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
-    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.
-        The application will now exit.</string>
-    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
-    <string name="barcode_detector_error">Could not set up the detector!</string>
-    <string name="barcode_failure">No barcode captured</string>
-    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for barcode detection.</string>
+    <string name="no_camera_permission">This application needs the camera permission in order to run properly.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage.</string>
+    <string name="barcode_detector_error">Could not set up the detector.</string>
+    <string name="barcode_failure">No barcode captured.</string>
+    <string name="barcode_error">Error reading barcode: %1$s</string>
     <string name="barcode_capture_tooltip">Tap to capture. Pinch/Stretch to zoom</string>
+    <string name="no_permission_title">Permission not granted.</string>
 </resources>

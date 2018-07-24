@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import java.lang.annotation.Retention;
@@ -49,6 +50,17 @@ public final class PermissionManager {
         if (shouldShowDialog) {
             final String[] handlePermission = new String[]{permission};
             ActivityCompat.requestPermissions(activity, handlePermission, RC_HANDLE_PERM);
+        }
+    }
+
+    public static void requestPermission(@NonNull final Fragment fragment,
+                                         @NonNull @Permission final String permission) {
+
+        final boolean shouldShowDialog = fragment.shouldShowRequestPermissionRationale(permission);
+
+        if (shouldShowDialog) {
+            final String[] handlePermission = new String[]{permission};
+            fragment.requestPermissions(handlePermission, RC_HANDLE_PERM);
         }
     }
 }

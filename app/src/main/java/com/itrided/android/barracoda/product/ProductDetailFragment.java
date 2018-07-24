@@ -13,6 +13,8 @@ import com.itrided.android.barracoda.databinding.FragmentProductDetailBinding;
 
 public class ProductDetailFragment extends Fragment {
 
+    public static final String TAG = ProductDetailFragment.class.getSimpleName();
+
     private FragmentProductDetailBinding binding;
     private ProductViewModel productViewModel;
 
@@ -53,6 +55,5 @@ public class ProductDetailFragment extends Fragment {
             binding.description.setText(product.getDescription());
             binding.weight.setText(product.getWeight());
         });
-
     }
 }

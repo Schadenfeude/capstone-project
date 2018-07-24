@@ -4,77 +4,69 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.widget.Toast;
 
-import com.itrided.android.barracoda.barcode.BarcodeCaptureController;
-import com.itrided.android.barracoda.databinding.ActivityScanBinding;
-import com.itrided.android.barracoda.databinding.AppBarScanBinding;
-import com.itrided.android.barracoda.databinding.ContentScanBinding;
+import com.itrided.android.barracoda.barcode.BarcodeScanFragment;
+import com.itrided.android.barracoda.databinding.ActivityMainBinding;
+import com.itrided.android.barracoda.databinding.AppBarMainBinding;
 
-import static com.itrided.android.barracoda.permissions.PermissionManager.Permission.CAMERA;
-import static com.itrided.android.barracoda.permissions.PermissionManager.RC_HANDLE_PERM;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private ActivityScanBinding activityScanBinding;
-    private AppBarScanBinding appBarScanBinding;
-    private ContentScanBinding contentScanBinding;
+    private static final long EXIT_TIMEOUT = 2000;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private PublishSubject<Boolean> backButtonClickSource = PublishSubject.create();
 
-    private BarcodeCaptureController captureController;
+    private ActivityMainBinding activityMainBinding;
+    private AppBarMainBinding appBarMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityScanBinding = DataBindingUtil.setContentView(this, R.layout.activity_scan);
-        appBarScanBinding = activityScanBinding.appBarScan;
-        contentScanBinding = appBarScanBinding.contentScan;
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        appBarMainBinding = activityMainBinding.appBarScan;
 
-        captureController = new BarcodeCaptureController(this,
-                contentScanBinding.preview, contentScanBinding.graphicOverlay);
-        getLifecycle().addObserver(captureController);
-
-        activityScanBinding.navView.setNavigationItemSelectedListener(this);
-        setSupportActionBar(appBarScanBinding.toolbar);
+        activityMainBinding.navView.setNavigationItemSelectedListener(this);
+        setSupportActionBar(appBarMainBinding.toolbar);
         setupDrawerToggle();
+        launchScanFragment();
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return captureController.onTouchEvent(this, event);
+    protected void onResume() {
+        super.onResume();
+        createDoubleTapToExitListener();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (requestCode == RC_HANDLE_PERM) {
-            for (final String permission : permissions) {
-                switch (permission) {
-                    case CAMERA:
-                        captureController.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                        break;
-                }
-            }
-        }
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    protected void onPause() {
+        super.onPause();
+        compositeDisposable.dispose();
     }
 
     @Override
     public void onBackPressed() {
-        final DrawerLayout drawer = activityScanBinding.drawerLayout;
+        final DrawerLayout drawer = activityMainBinding.drawerLayout;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            //todo figure out where to put this
+//            backButtonClickSource.onNext(true);
         }
     }
 
@@ -98,15 +90,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-        activityScanBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void setupDrawerToggle() {
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, activityScanBinding.drawerLayout, appBarScanBinding.toolbar,
+                this, activityMainBinding.drawerLayout, appBarMainBinding.toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        activityScanBinding.drawerLayout.addDrawerListener(toggle);
+        activityMainBinding.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void launchScanFragment() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        final BarcodeScanFragment barcodeScanFragment = BarcodeScanFragment.getInstance();
+
+        transaction.replace(R.id.fragment_placeholder, barcodeScanFragment, BarcodeScanFragment.TAG);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void createDoubleTapToExitListener() {
+        compositeDisposable.add(backButtonClickSource
+                .debounce(100, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(event -> Toast.makeText(this, "Tap again to exit.", Toast.LENGTH_SHORT).show())
+                .timeInterval(TimeUnit.MILLISECONDS)
+                .skip(1)
+                .filter(interval -> interval.time() < EXIT_TIMEOUT)
+                .subscribe(interval -> finish()));
     }
 }
