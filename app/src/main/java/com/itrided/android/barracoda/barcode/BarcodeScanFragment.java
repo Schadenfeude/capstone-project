@@ -1,5 +1,7 @@
 package com.itrided.android.barracoda.barcode;
 
+import com.google.android.gms.vision.barcode.Barcode;
+
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.itrided.android.barcodescanner.ui.barcode.BarcodeGraphicTracker;
 import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
 import com.itrided.android.barracoda.data.model.api.ApiProduct;
@@ -21,8 +22,10 @@ import com.itrided.android.barracoda.databinding.FragmentScanBinding;
 import com.itrided.android.barracoda.product.ProductDetailFragment;
 import com.itrided.android.barracoda.product.ProductViewModel;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 
 import static com.itrided.android.barracoda.permissions.PermissionManager.RC_HANDLE_PERM;
 
@@ -42,6 +45,11 @@ public class BarcodeScanFragment extends Fragment {
     private ProductViewModel productViewModel;
     private BarcodeCaptureController captureController;
 
+    private CompositeDisposable disposable;
+    private PublishSubject<Barcode> barcodes = PublishSubject.create();
+    private Observable<ApiProduct> apiProductObservable = barcodes
+            .switchMapSingle(barcode -> BarraCodaApp.getRecipeService().getProduct(barcode.rawValue));
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +65,22 @@ public class BarcodeScanFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentScanBinding.inflate(inflater, container, false);
         captureController = new BarcodeCaptureController(this, binding.preview,
-                binding.graphicOverlay, getBarcodeUpdateListener());
+                binding.graphicOverlay, barcode -> barcodes.onNext(barcode));
 
         getLifecycle().addObserver(captureController);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerBarcodeResultReceiver();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        disposable.dispose();
     }
 
     @Override
@@ -73,30 +93,6 @@ public class BarcodeScanFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private BarcodeGraphicTracker.BarcodeUpdateListener getBarcodeUpdateListener() {
-        return barcode -> {
-            Log.d(TAG, "getBarcodeUpdateListener: " + barcode.rawValue);
-            BarraCodaApp.getRecipeService().getProduct(barcode.rawValue)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableSingleObserver<ApiProduct>() {
-                        @Override
-                        public void onSuccess(@Nullable ApiProduct result) {
-                            if (result == null) {
-                                return;
-                            }
-                            productViewModel.setProduct(result);
-                            launchDetailFragment();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            //todo handle error
-                            e.printStackTrace();
-                        }
-                    });
-        };
-    }
-
     private void launchDetailFragment() {
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -105,5 +101,16 @@ public class BarcodeScanFragment extends Fragment {
         transaction.replace(R.id.fragment_placeholder, productDetailFragment, ProductDetailFragment.TAG);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void registerBarcodeResultReceiver() {
+        disposable = new CompositeDisposable();
+        disposable.add(apiProductObservable
+                .firstElement()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    productViewModel.setProduct(result);
+                    launchDetailFragment();
+                }));
     }
 }
