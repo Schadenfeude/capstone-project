@@ -15,11 +15,14 @@
                 android:layout_height="0dp"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
-                app:layout_constraintDimensionRatio="H,4:3"
+                android:elevation="4dp"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:src="@tools:sample/backgrounds/scenic"/>
+                app:layout_constraintBottom_toTopOf="@id/name"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_cake"/>
 
         <TextView
                 android:id="@+id/name"
@@ -28,7 +31,7 @@
                 app:layout_constraintTop_toBottomOf="@id/image"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                style="AppTheme.ProductTitle"
+                style="@style/AppTheme.ProductTitle"
                 tools:text="Lindt dark chocolate"/>
 
         <TextView

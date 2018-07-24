@@ -18,18 +18,8 @@ public class ProductDetailFragment extends Fragment {
     private FragmentProductDetailBinding binding;
     private ProductViewModel productViewModel;
 
-    private static ProductDetailFragment INSTANCE = null;
-
-    public static ProductDetailFragment getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ProductDetailFragment();
-        }
-        return INSTANCE;
-    }
-
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         setupViewModel();
     }

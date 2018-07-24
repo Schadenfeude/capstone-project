@@ -96,7 +96,7 @@ public class BarcodeScanFragment extends Fragment {
     private void launchDetailFragment() {
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        final ProductDetailFragment productDetailFragment = ProductDetailFragment.getInstance();
+        final ProductDetailFragment productDetailFragment = new ProductDetailFragment();
 
         transaction.replace(R.id.fragment_placeholder, productDetailFragment, ProductDetailFragment.TAG);
         transaction.addToBackStack(null);

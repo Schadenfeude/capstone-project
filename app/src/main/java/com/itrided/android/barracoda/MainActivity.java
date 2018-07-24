@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final long EXIT_TIMEOUT = 2000;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private CompositeDisposable compositeDisposable;
     private PublishSubject<Boolean> backButtonClickSource = PublishSubject.create();
 
     private ActivityMainBinding activityMainBinding;
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void createDoubleTapToExitListener() {
+        compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(backButtonClickSource
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
