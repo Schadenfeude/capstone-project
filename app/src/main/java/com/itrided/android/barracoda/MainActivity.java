@@ -61,12 +61,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         final DrawerLayout drawer = activityMainBinding.drawerLayout;
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            backButtonClickSource.onNext(true);
         } else {
             super.onBackPressed();
-            //todo figure out where to put this
-//            backButtonClickSource.onNext(true);
         }
     }
 
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final BarcodeScanFragment barcodeScanFragment = BarcodeScanFragment.getInstance();
 
         transaction.replace(R.id.fragment_placeholder, barcodeScanFragment, BarcodeScanFragment.TAG);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 

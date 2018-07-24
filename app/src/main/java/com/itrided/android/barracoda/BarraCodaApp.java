@@ -8,7 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.itrided.android.barracoda.data.model.api.ApiProduct;
 import com.itrided.android.barracoda.data.service.BarcodeService;
@@ -39,7 +38,7 @@ public class BarraCodaApp extends Application {
 
     private static BarcodeService createBarcodeService() {
         final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(ApiProduct.class, new BarcodeJSONDeserializer<ApiProduct>())
+                .registerTypeAdapter(ApiProduct.class, new BarcodeJsonDeserializer<ApiProduct>())
                 .create();
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -51,9 +50,7 @@ public class BarraCodaApp extends Application {
         return retrofit.create(BarcodeService.class);
     }
 
-    private static class BarcodeJSONDeserializer<T> implements JsonDeserializer<T> {
-
-        private static final String TAG = BarcodeJSONDeserializer.class.getSimpleName();
+    private static class BarcodeJsonDeserializer<T> implements JsonDeserializer<T> {
 
         @Override
         public T deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {

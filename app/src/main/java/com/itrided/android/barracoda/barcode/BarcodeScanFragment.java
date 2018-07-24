@@ -50,9 +50,9 @@ public class BarcodeScanFragment extends Fragment {
         productViewModel = ViewModelProviders.of(getActivity()).get(ProductViewModel.class);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentScanBinding.inflate(inflater, container, false);
@@ -62,7 +62,6 @@ public class BarcodeScanFragment extends Fragment {
         getLifecycle().addObserver(captureController);
         return binding.getRoot();
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
