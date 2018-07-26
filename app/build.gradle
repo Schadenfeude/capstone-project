@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
 
+//**********************************//
+//Values
+def UPCDB_API_KEY = '"' + UpcDbApiKey + '"' ?: '"Missing MovieDBApi key, please refer to the README.md file for insructions!"'
+//**********************************//
+
 android {
     compileSdkVersion 27
+    buildToolsVersion '28.0.1'
 
     defaultConfig {
+        buildConfigField("String", "UPCDB_API_KEY", UPCDB_API_KEY)
+
         applicationId "com.itrided.android.barracoda"
         minSdkVersion 21
         targetSdkVersion 27

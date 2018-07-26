@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
+import okhttp3.ResponseBody;
 
 import static com.itrided.android.barracoda.permissions.PermissionManager.RC_HANDLE_PERM;
 
@@ -47,8 +47,8 @@ public class BarcodeScanFragment extends Fragment {
 
     private CompositeDisposable disposable;
     private PublishSubject<Barcode> barcodes = PublishSubject.create();
-    private Observable<ApiProduct> apiProductObservable = barcodes
-            .switchMapSingle(barcode -> BarraCodaApp.getRecipeService().getProduct(barcode.rawValue));
+    private Observable<ResponseBody> apiProductObservable = barcodes
+            .switchMapSingle(barcode -> BarraCodaApp.getBarcodeService().getProduct(barcode.rawValue));
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class BarcodeScanFragment extends Fragment {
         final ProductDetailFragment productDetailFragment = new ProductDetailFragment();
 
         transaction.replace(R.id.fragment_placeholder, productDetailFragment, ProductDetailFragment.TAG);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(ProductDetailFragment.TAG);
         transaction.commit();
     }
 
@@ -109,7 +109,11 @@ public class BarcodeScanFragment extends Fragment {
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                    productViewModel.setProduct(result);
+                    final String resultJson = result.string();
+                    final ApiProduct product = BarraCodaApp.getGsonService()
+                            .fromJson(resultJson, ApiProduct.class);
+
+                    productViewModel.setProduct(product);
                     launchDetailFragment();
                 }));
     }
