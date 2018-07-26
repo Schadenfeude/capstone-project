@@ -1,4 +1,4 @@
-package com.itrided.android.barracoda.product;
+package com.itrided.android.barracoda.products.product;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;

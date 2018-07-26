@@ -18,8 +18,8 @@ import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
 import com.itrided.android.barracoda.data.model.api.ApiProduct;
 import com.itrided.android.barracoda.databinding.FragmentScanBinding;
-import com.itrided.android.barracoda.product.ProductDetailFragment;
-import com.itrided.android.barracoda.product.ProductViewModel;
+import com.itrided.android.barracoda.products.product.ProductDetailFragment;
+import com.itrided.android.barracoda.products.product.ProductViewModel;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
