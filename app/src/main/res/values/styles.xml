@@ -17,20 +17,27 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="AppTheme.ProductTitle" parent="@style/TextAppearance.AppCompat.Subhead">
+    <style name="AppTheme.ProductLabel" parent="@style/TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/product_title_size</item>
     </style>
 
-    <style name="AppTheme.ProductSubtitle" parent="@style/TextAppearance.AppCompat.Subhead">
+    <style name="AppTheme.ProductDescription" parent="@style/TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textSize">@dimen/product_subtitle_size</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="AppTheme.BodyText" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textSize">@dimen/text_body_size</item>
+    </style>
+
+    <style name="AppTheme.DividerHorizontal" parent="AppTheme">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
 </resources>

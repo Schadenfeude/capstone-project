@@ -115,6 +115,9 @@ public class BarcodeScanFragment extends Fragment {
 
                     productViewModel.setProduct(product);
                     launchDetailFragment();
+                }, e -> {
+                    e.printStackTrace();
+                    launchDetailFragment();
                 }));
     }
 }
