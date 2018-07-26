@@ -7,8 +7,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/activity_vertical_margin"
-            >
+            android:padding="@dimen/activity_vertical_margin">
 
         <ImageView
                 android:id="@+id/image"
@@ -47,14 +46,15 @@
                 app:layout_constraintTop_toBottomOf="@id/horizontal_div"
                 app:layout_constraintRight_toLeftOf="@id/name"
                 style="@style/AppTheme.ProductLabel"
-                android:text="Name: "/>
+                android:text="@string/label_name"/>
 
         <TextView
                 android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toRightOf="@id/label_name"
-                app:layout_constraintTop_toBottomOf="@id/horizontal_div"
+                app:layout_constraintTop_toTopOf="@id/label_name"
+                app:layout_constraintBottom_toBottomOf="@id/label_name"
                 app:layout_constraintRight_toRightOf="parent"
                 style="@style/AppTheme.ProductDescription"
                 android:text="@string/information_unavailable"/>
@@ -68,14 +68,15 @@
                 app:layout_constraintTop_toBottomOf="@id/label_name"
                 app:layout_constraintRight_toLeftOf="@id/description"
                 style="@style/AppTheme.ProductLabel"
-                android:text="Description: "/>
+                android:text="@string/label_description"/>
 
         <TextView
                 android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintTop_toTopOf="@id/label_description"
                 app:layout_constraintLeft_toRightOf="@id/label_description"
+                app:layout_constraintBottom_toBottomOf="@id/label_description"
                 app:layout_constraintRight_toRightOf="parent"
                 style="@style/AppTheme.ProductDescription"
                 android:text="@string/information_unavailable"/>
@@ -85,16 +86,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_description"
+                app:layout_constraintRight_toLeftOf="@id/weight"
                 style="@style/AppTheme.ProductLabel"
-                android:text="Weight: "/>
+                android:text="@string/label_weight"/>
 
         <TextView
                 android:id="@+id/weight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/description"
-                app:layout_constraintStart_toEndOf="@+id/label_weight"
+                app:layout_constraintTop_toTopOf="@id/label_weight"
+                app:layout_constraintLeft_toRightOf="@id/label_weight"
+                app:layout_constraintBottom_toBottomOf="@id/label_weight"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/AppTheme.ProductDescription"
                 android:text="@string/information_unavailable"/>
