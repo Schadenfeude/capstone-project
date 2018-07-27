@@ -6,9 +6,11 @@ import com.google.gson.annotations.SerializedName;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.itrided.android.barracoda.data.Product;
+
 import java.util.List;
 
-public class ProductPojo implements Parcelable {
+public class ProductPojo implements Product, Parcelable {
     @SerializedName("ean")
     @Expose
     private String ean;
@@ -79,16 +81,16 @@ public class ProductPojo implements Parcelable {
         return weight;
     }
 
-    public List<String> getImages() {
-        return images;
+    public String getImage() {
+        return images != null && images.size() > 0 ? images.get(0) : "Image Unavailable";
     }
 
     @Override
     public String toString() {
         return "ean: " + ean +
-                "title: " + name +
-                "description: " + description +
-                "weight: " + weight +
-                "images: " + images;
+                "\ntitle: " + name +
+                "\ndescription: " + description +
+                "\nweight: " + weight +
+                "\nimage: " + images.get(0);
     }
 }

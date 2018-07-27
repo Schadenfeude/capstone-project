@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.itrided.android.barracoda.data.model.api.ProductPojo;
+import com.itrided.android.barracoda.data.Product;
 
 import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.IngredientViewHolder> {
 
-    private ArrayList<ProductPojo> products;
+    private ArrayList<Product> products;
 
     @NonNull
     @Override

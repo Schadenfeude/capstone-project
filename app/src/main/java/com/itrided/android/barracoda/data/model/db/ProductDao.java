@@ -1,6 +1,5 @@
 package com.itrided.android.barracoda.data.model.db;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -10,27 +9,30 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface ProductDao {
 
-    @Query("SELECT * FROM Product WHERE ean = :ean")
-    Product loadProductByEan(int ean);
+    @Query("SELECT * FROM ProductEntry WHERE ean = :ean")
+    Single<ProductEntry> getProduct(String ean);
 
-    @Query("SELECT * FROM Product")
-    LiveData<List<Product>> findAllProducts();
+    @Query("SELECT * FROM ProductEntry")
+    Flowable<List<ProductEntry>> getAllProducts();
 
-    @Query("SELECT * FROM Product")
-    List<Product> findAllProductsSync();
+    @Query("SELECT * FROM ProductEntry")
+    Single<List<ProductEntry>> getAllProductsSync();
 
     @Insert(onConflict = IGNORE)
-    void addProduct(@NonNull Product product);
+    void addProduct(@NonNull ProductEntry product);
 
     @Update(onConflict = REPLACE)
-    void updateProduct(@NonNull Product product);
+    void updateProduct(@NonNull ProductEntry product);
 
     @Delete
-    void deleteProduct(@NonNull Product product);
+    void deleteProduct(@NonNull ProductEntry product);
 }

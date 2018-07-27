@@ -18,6 +18,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -54,6 +60,9 @@ dependencies {
 
     // Java8 support for Lifecycles
     implementation "android.arch.lifecycle:common-java8:$archLifecycleVersion"
+
+    // RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$archLifecycleVersion"
 
     // ViewModel, LiveData, Persistence
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"

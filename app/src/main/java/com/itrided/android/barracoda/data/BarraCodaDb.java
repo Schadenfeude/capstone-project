@@ -6,12 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.itrided.android.barracoda.data.model.db.Product;
+import com.itrided.android.barracoda.data.model.db.ProductEntry;
 import com.itrided.android.barracoda.data.model.db.ProductDao;
 import com.itrided.android.barracoda.data.model.db.Store;
 import com.itrided.android.barracoda.data.model.db.StoreDao;
 
-@Database(entities = {Product.class, Store.class}, version = 1)
+@Database(entities = {ProductEntry.class, Store.class}, version = 1)
 public abstract class BarraCodaDb extends RoomDatabase {
 
     private static final String DATABASE_NAME = "BARRA_CODA_DB";
