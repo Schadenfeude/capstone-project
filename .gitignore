@@ -54,3 +54,4 @@ freeline/
 freeline_project_description.json
 .DS_Store
 app/libs/
+app/schemas/
