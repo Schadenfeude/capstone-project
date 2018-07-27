@@ -74,11 +74,9 @@ public class ProductDetailFragment extends Fragment {
         disposable.add(
                 barraCodaDb.productModel().getProduct(product.getEan())
                         .subscribeOn(Schedulers.io())
-                        .subscribe(productEntry -> {
-                                    binding.fabFavorite.setImageResource(R.drawable.ic_favorite);
-                                }, isNotFavorite -> {
-                                    binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border);
-                                }
+                        .subscribe(
+                                productEntry -> binding.fabFavorite.setImageResource(R.drawable.ic_favorite),
+                                isNotFavorite -> binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border)
                         ));
     }
 
@@ -88,10 +86,11 @@ public class ProductDetailFragment extends Fragment {
                 .subscribe(
                         productEntry -> {
                             barraCodaDb.productModel().deleteProduct(productEntry);
+                            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border);
                         },
                         isNotFavorite -> {
-                            final ProductEntry productEntry = new ProductEntry(product);
-                            barraCodaDb.productModel().addProduct(productEntry);
+                            barraCodaDb.productModel().addProduct(new ProductEntry(product));
+                            binding.fabFavorite.setImageResource(R.drawable.ic_favorite);
                         }
                 );
     }
