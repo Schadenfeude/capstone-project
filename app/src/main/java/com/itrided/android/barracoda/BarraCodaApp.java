@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 
 import android.app.Application;
 
-import com.itrided.android.barracoda.data.model.api.ApiProduct;
+import com.itrided.android.barracoda.data.model.api.ProductPojo;
 import com.itrided.android.barracoda.data.service.BackupBarcodeService;
 import com.itrided.android.barracoda.data.service.BarcodeService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -46,7 +46,7 @@ public class BarraCodaApp extends Application {
 
     private static Gson createGsonService() {
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(ApiProduct.class, new BarcodeJsonDeserializer<ApiProduct>())
+                .registerTypeAdapter(ProductPojo.class, new BarcodeJsonDeserializer<ProductPojo>())
                 .create();
     }
 

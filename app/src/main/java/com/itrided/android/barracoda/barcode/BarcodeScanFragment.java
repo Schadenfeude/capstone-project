@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
-import com.itrided.android.barracoda.data.model.api.ApiProduct;
+import com.itrided.android.barracoda.data.model.api.ProductPojo;
 import com.itrided.android.barracoda.databinding.FragmentScanBinding;
 import com.itrided.android.barracoda.products.product.ProductDetailFragment;
 import com.itrided.android.barracoda.products.product.ProductViewModel;
@@ -110,8 +110,8 @@ public class BarcodeScanFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     final String resultJson = result.string();
-                    final ApiProduct product = BarraCodaApp.getGsonService()
-                            .fromJson(resultJson, ApiProduct.class);
+                    final ProductPojo product = BarraCodaApp.getGsonService()
+                            .fromJson(resultJson, ProductPojo.class);
 
                     productViewModel.setProduct(product);
                     launchDetailFragment();

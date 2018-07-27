@@ -8,7 +8,7 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-public class ApiProduct implements Parcelable {
+public class ProductPojo implements Parcelable {
     @SerializedName("ean")
     @Expose
     private String ean;
@@ -29,7 +29,7 @@ public class ApiProduct implements Parcelable {
     @Expose
     private List<String> images;
 
-    protected ApiProduct(Parcel in) {
+    protected ProductPojo(Parcel in) {
         ean = in.readString();
         name = in.readString();
         description = in.readString();
@@ -37,15 +37,15 @@ public class ApiProduct implements Parcelable {
         images = in.createStringArrayList();
     }
 
-    public static final Creator<ApiProduct> CREATOR = new Creator<ApiProduct>() {
+    public static final Creator<ProductPojo> CREATOR = new Creator<ProductPojo>() {
         @Override
-        public ApiProduct createFromParcel(Parcel in) {
-            return new ApiProduct(in);
+        public ProductPojo createFromParcel(Parcel in) {
+            return new ProductPojo(in);
         }
 
         @Override
-        public ApiProduct[] newArray(int size) {
-            return new ApiProduct[size];
+        public ProductPojo[] newArray(int size) {
+            return new ProductPojo[size];
         }
     };
 

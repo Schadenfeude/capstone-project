@@ -2,18 +2,16 @@ package com.itrided.android.barracoda.products;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.itrided.android.barracoda.data.model.api.ApiProduct;
+import com.itrided.android.barracoda.data.model.api.ProductPojo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.IngredientViewHolder> {
 
-    private ArrayList<ApiProduct> products;
+    private ArrayList<ProductPojo> products;
 
     @NonNull
     @Override
@@ -31,7 +29,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         return 0;
     }
 
-//    public ProductListAdapter(List<ApiProduct> ingredientsValue) {
+//    public ProductListAdapter(List<ProductPojo> ingredientsValue) {
 //        products = new ArrayList<>(ingredientsValue.size());
 //        products.addAll(ingredientsValue);
 //    }
@@ -55,7 +53,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 //        return products.size();
 //    }
 //
-//    public void setItems(List<ApiProduct> ingredientList) {
+//    public void setItems(List<ProductPojo> ingredientList) {
 //        products.clear();
 //        products.addAll(ingredientList);
 //        notifyDataSetChanged();
@@ -72,7 +70,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 //            this.binding = binding;
 //        }
 //
-//        void bind(@NonNull ApiProduct product) {
+//        void bind(@NonNull ProductPojo product) {
 //            final String amount = product.getQuantity() + " " + product.getMeasure();
 //            binding.ingredientNameTv.setText(product.getName());
 //            binding.ingredientAmountTv.setText(amount);
