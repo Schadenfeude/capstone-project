@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
 import com.itrided.android.barracoda.data.BarraCodaDb;
 import com.itrided.android.barracoda.data.Product;
@@ -64,7 +65,7 @@ public class ProductDetailFragment extends Fragment {
 
     private void setupFab() {
         final Product product = productViewModel.getProduct().getValue();
-        final BarraCodaDb barraCodaDb = BarraCodaDb.getInstance(getContext());
+        final BarraCodaDb barraCodaDb = BarraCodaApp.getDatabaseInstance();
 
         binding.fabFavorite.setOnClickListener(getFavoriteClickListener(barraCodaDb, product));
         setupFabState(barraCodaDb, product);

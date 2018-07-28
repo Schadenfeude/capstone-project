@@ -13,49 +13,49 @@ import android.view.ViewGroup;
 import com.itrided.android.barracoda.databinding.FragmentProductListBinding;
 
 public class ProductListFragment extends Fragment {
+
     private FragmentProductListBinding binding;
-//    private FragmentIngredientsBinding binding;
-//    private RecipeViewModel recipeViewModel;
-//    private ProductListAdapter productListAdapter;
-//
-//    public ProductListFragment() {
-//    }
-//
-//    private static ProductListFragment INSTANCE = null;
-//
-//    public static ProductListFragment getInstance() {
-//        if (INSTANCE == null) {
-//            INSTANCE = new ProductListFragment();
-//        }
-//        return INSTANCE;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
-//
-//        // get the Recipe from the Activity
-//        recipeViewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
-//        recipeViewModel.getIngredients().observe(this, ingredients -> {
-//            if (productListAdapter == null)
-//                return;
-//
-//            productListAdapter.setItems(ingredients);
-//        });
-//    }
-//
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        binding = FragmentIngredientsBinding.inflate(inflater, container, false);
-//
-//        // update the Recipe when a new View is created
-//        productListAdapter = new ProductListAdapter(recipeViewModel.getIngredientsValue());
-//        binding.ingredientsRv.setAdapter(productListAdapter);
-//        binding.ingredientsRv.addItemDecoration(new DividerItemDecoration(binding.ingredientsRv.getContext(),
-//                LinearLayoutManager.VERTICAL));
-//
-//        return binding.getRoot();
-//    }
+    private ProductListViewModel productListViewModel;
+    private ProductListAdapter productListAdapter;
+
+    public ProductListFragment() {
+    }
+
+    private static ProductListFragment INSTANCE = null;
+
+    public static ProductListFragment getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ProductListFragment();
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
+        // get the Recipe from the Activity
+        productListViewModel = ViewModelProviders.of(getActivity()).get(ProductListViewModel.class);
+        productListViewModel.getProducts().observe(this, productEntries -> {
+            if (productListAdapter == null)
+                return;
+
+            productListAdapter.setItems(productEntries);
+        });
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentProductListBinding.inflate(inflater, container, false);
+
+        // update the Recipe when a new View is created
+        productListAdapter = new ProductListAdapter(productListViewModel.getProducts().getValue());
+        binding.productsRv.setAdapter(productListAdapter);
+        binding.productsRv.addItemDecoration(new DividerItemDecoration(binding.productsRv.getContext(),
+                LinearLayoutManager.VERTICAL));
+
+        return binding.getRoot();
+    }
 }

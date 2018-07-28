@@ -20,4 +20,8 @@
     <string name="label_weight">Weight:</string>
     <string name="label_description">Description:</string>
     <string name="label_name">Name:</string>
+    <string name="nav_scan_barcode">Scan Barcode</string>
+    <string name="nav_favorite_products">Favorite Products</string>
+    <string name="nav_favorite_stores">Favorite Stores</string>
+    <string name="exit_toast">Tap \'Back\' again to exit.</string>
 </resources>

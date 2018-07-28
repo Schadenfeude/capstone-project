@@ -66,6 +66,7 @@ dependencies {
 
     // ViewModel, LiveData, Persistence
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+    implementation "android.arch.lifecycle:reactivestreams:$archLifecycleVersion"
     implementation "android.arch.persistence.room:runtime:$archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$archLifecycleVersion"

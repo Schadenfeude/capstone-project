@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 
 import android.app.Application;
 
+import com.itrided.android.barracoda.data.BarraCodaDb;
 import com.itrided.android.barracoda.data.model.api.ProductPojo;
 import com.itrided.android.barracoda.data.service.BackupBarcodeService;
 import com.itrided.android.barracoda.data.service.BarcodeService;
@@ -27,6 +28,7 @@ public class BarraCodaApp extends Application {
     private static BarcodeService barcodeService;
     //todo implement
     private static BackupBarcodeService backupBarcodeService;
+    private static BarraCodaDb barraCodaDb;
 
     @Override
     public void onCreate() {
@@ -34,6 +36,11 @@ public class BarraCodaApp extends Application {
 
         barcodeService = createBarcodeService();
         gsonService = createGsonService();
+        barraCodaDb = BarraCodaDb.getInstance(getApplicationContext());
+    }
+
+    public static BarraCodaDb getDatabaseInstance() {
+        return barraCodaDb;
     }
 
     public static BarcodeService getBarcodeService() {

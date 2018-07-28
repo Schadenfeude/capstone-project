@@ -1,79 +1,64 @@
 package com.itrided.android.barracoda.products;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.itrided.android.barracoda.data.Product;
+import com.itrided.android.barracoda.databinding.ItemProductListBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.IngredientViewHolder> {
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
 
     private ArrayList<Product> products;
 
+    public ProductListAdapter(@Nullable List<? extends Product> products) {
+        this.products = new ArrayList<>();
+        if (products != null) {
+            this.products.addAll(products);
+        }
+    }
+
     @NonNull
     @Override
-    public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        final LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        final ItemProductListBinding binding = ItemProductListBinding.inflate(layoutInflater, viewGroup, false);
+
+        return new ProductViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
+        productViewHolder.bind(products.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return products.size();
     }
 
-//    public ProductListAdapter(List<ProductPojo> ingredientsValue) {
-//        products = new ArrayList<>(ingredientsValue.size());
-//        products.addAll(ingredientsValue);
-//    }
-//
-//    @NonNull
-//    @Override
-//    public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-//        final LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-//        final ItemIngredientBinding binding = ItemIngredientBinding.inflate(layoutInflater, viewGroup, false);
-//
-//        return new ProductListAdapter.IngredientViewHolder(binding);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull IngredientViewHolder ingredientViewHolder, int position) {
-//        ingredientViewHolder.bind(products.get(position));
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return products.size();
-//    }
-//
-//    public void setItems(List<ProductPojo> ingredientList) {
-//        products.clear();
-//        products.addAll(ingredientList);
-//        notifyDataSetChanged();
-//    }
+    public void setItems(List<? extends Product> ingredientList) {
+        products.clear();
+        products.addAll(ingredientList);
+        notifyDataSetChanged();
+    }
 
-    static class IngredientViewHolder extends RecyclerView.ViewHolder {
-        public IngredientViewHolder(View itemView) {
-            super(itemView);
+    static class ProductViewHolder extends RecyclerView.ViewHolder {
+        private ItemProductListBinding binding;
+
+        ProductViewHolder(ItemProductListBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
-//        private ItemIngredientBinding binding;
-//
-//        IngredientViewHolder(ItemIngredientBinding binding) {
-//            super(binding.getRoot());
-//            this.binding = binding;
-//        }
-//
-//        void bind(@NonNull ProductPojo product) {
-//            final String amount = product.getQuantity() + " " + product.getMeasure();
-//            binding.ingredientNameTv.setText(product.getName());
-//            binding.ingredientAmountTv.setText(amount);
-//        }
+
+        void bind(@NonNull Product product) {
+            binding.nameTv.setText(product.getName());
+            binding.priceTv.setText(product.getWeight());
+        }
     }
 }
