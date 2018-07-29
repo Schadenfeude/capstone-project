@@ -19,7 +19,7 @@ import com.itrided.android.barracoda.barcode.BarcodeScanFragment;
 import com.itrided.android.barracoda.databinding.ActivityMainBinding;
 import com.itrided.android.barracoda.databinding.AppBarMainBinding;
 import com.itrided.android.barracoda.products.ProductListFragment;
-import com.itrided.android.barracoda.stores.StoresListFragment;
+import com.itrided.android.barracoda.stores.StoreListFragment;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding activityMainBinding;
     private AppBarMainBinding appBarMainBinding;
+
+    //TODO pop fragments onDestroy... manage fragment lifecycle better
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 replaceFragment(ProductListFragment.getInstance(), ProductListFragment.TAG);
                 break;
             case R.id.nav_favorite_stores:
-                replaceFragment(StoresListFragment.getInstance(), StoresListFragment.TAG);
+                replaceFragment(StoreListFragment.getInstance(), StoreListFragment.TAG);
                 break;
         }
 

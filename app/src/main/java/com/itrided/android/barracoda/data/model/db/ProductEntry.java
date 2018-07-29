@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import com.itrided.android.barracoda.data.Product;
+import com.itrided.android.barracoda.data.model.Product;
 
 @Entity
 public class ProductEntry implements Product {

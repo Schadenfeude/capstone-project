@@ -30,7 +30,8 @@ ext {
     supportLibraryVersion = "27.1.1"
     constraintLayoutVersion = '1.1.2'
     archLifecycleVersion = '1.1.1'
-    playServicesVersion = '15.0.2'
+    visionServicesVersion = '15.0.2'
+    mapsServicesVersion = '15.0.1'
 
     rxjavaVersion = '2.1.8'
     rxandroidVersion = '2.0.2'

@@ -1,4 +1,4 @@
-package com.itrided.android.barracoda.data;
+package com.itrided.android.barracoda.data.model;
 
 public interface Product {
     String getEan();

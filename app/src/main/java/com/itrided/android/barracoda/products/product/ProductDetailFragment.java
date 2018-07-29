@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
 import com.itrided.android.barracoda.data.BarraCodaDb;
-import com.itrided.android.barracoda.data.Product;
+import com.itrided.android.barracoda.data.model.Product;
 import com.itrided.android.barracoda.data.model.db.ProductEntry;
 import com.itrided.android.barracoda.databinding.FragmentProductDetailBinding;
 

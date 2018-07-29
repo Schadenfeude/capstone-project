@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.itrided.android.barracoda.data.Product;
+import com.itrided.android.barracoda.data.model.Product;
 import com.itrided.android.barracoda.databinding.ItemProductListBinding;
 
 import java.util.ArrayList;

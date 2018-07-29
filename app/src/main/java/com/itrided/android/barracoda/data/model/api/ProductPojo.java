@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.itrided.android.barracoda.data.Product;
+import com.itrided.android.barracoda.data.model.Product;
 
 import java.util.List;
 

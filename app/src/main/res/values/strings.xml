@@ -6,22 +6,30 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="exit_toast">Tap \'Back\' again to exit.</string>
 
-    <!-- Barcode -->
+    <!-- Permissions -->
+    <string name="no_permission_title">Permission not granted.</string>
     <string name="permission_camera_rationale">Access to the camera is needed for barcode detection.</string>
     <string name="no_camera_permission">This application needs the camera permission in order to run properly.</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage.</string>
+
+    <!-- Barcode -->
     <string name="barcode_detector_error">Could not set up the detector.</string>
     <string name="barcode_failure">No barcode captured.</string>
     <string name="barcode_error">Error reading barcode: %1$s</string>
-    <string name="barcode_capture_tooltip">Tap to capture. Pinch/Stretch to zoom</string>
-    <string name="no_permission_title">Permission not granted.</string>
     <string name="information_unavailable">Information unavailable</string>
+    <string name="nav_scan_barcode">Scan Barcode</string>
+
+    <!-- Products -->
     <string name="label_weight">Weight:</string>
     <string name="label_description">Description:</string>
     <string name="label_name">Name:</string>
-    <string name="nav_scan_barcode">Scan Barcode</string>
     <string name="nav_favorite_products">Favorite Products</string>
     <string name="nav_favorite_stores">Favorite Stores</string>
-    <string name="exit_toast">Tap \'Back\' again to exit.</string>
+
+    <!-- Stores -->
+    <string name="google_privacy_policy">http://www.google.com/policies/privacy</string>
+    <string name="no_location_permission_message">You need to enable location permissions first.</string>
+
 </resources>

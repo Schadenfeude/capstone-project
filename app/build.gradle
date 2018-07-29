@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 //**********************************//
 //Values
-def UPCDB_API_KEY = '"' + UpcDbApiKey + '"' ?: '"Missing MovieDBApi key, please refer to the README.md file for insructions!"'
+def UPCDB_API_KEY = '"' + UpcDbApiKey + '"' ?: '"Missing UpcDbApiKey key, please refer to the README.md file for insructions!"'
 //**********************************//
 
 android {
@@ -10,8 +10,6 @@ android {
     buildToolsVersion '28.0.1'
 
     defaultConfig {
-        buildConfigField("String", "UPCDB_API_KEY", UPCDB_API_KEY)
-
         applicationId "com.itrided.android.barracoda"
         minSdkVersion 21
         targetSdkVersion 27
@@ -24,6 +22,9 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        buildConfigField("String", "UPCDB_API_KEY", UPCDB_API_KEY)
+        manifestPlaceholders.MAPS_API_KEY = MapsApiKey
     }
 
     buildTypes {
@@ -56,7 +57,9 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-vision:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-vision:$visionServicesVersion"
+    implementation "com.google.android.gms:play-services-places:$mapsServicesVersion"
+    implementation "com.google.android.gms:play-services-location:$mapsServicesVersion"
 
     // Java8 support for Lifecycles
     implementation "android.arch.lifecycle:common-java8:$archLifecycleVersion"
