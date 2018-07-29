@@ -20,7 +20,11 @@ android {
     }
 }
 
+ext {
+    servicesVersion = visionServicesVersion == null ? '15.0.2' : visionServicesVersion
+}
+
 dependencies {
     // Google Play Services
-    implementation "com.google.android.gms:play-services-vision:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-vision:$servicesVersion"
 }
