@@ -56,11 +56,11 @@ public final class PermissionManager {
     public static void requestPermission(@NonNull final Fragment fragment,
                                          @NonNull @Permission final String permission) {
 
-        final boolean shouldShowDialog = fragment.shouldShowRequestPermissionRationale(permission);
+//        final boolean shouldShowDialog = fragment.shouldShowRequestPermissionRationale(permission);
 
-        if (shouldShowDialog) {
+//        if (shouldShowDialog) {
             final String[] handlePermission = new String[]{permission};
             fragment.requestPermissions(handlePermission, RC_HANDLE_PERM);
-        }
+//        }
     }
 }

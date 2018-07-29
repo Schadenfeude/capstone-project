@@ -121,7 +121,7 @@ public class StoreFinderController implements LifecycleObserver,
 
     private void setupResultObserver() {
         stores.observe(fragment, storesList -> {
-            if (adapter == null || storesList == null) {
+            if (adapter == null || storesList == null || storesList.isEmpty()) {
                 return;
             }
 
