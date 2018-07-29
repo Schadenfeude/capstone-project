@@ -65,22 +65,27 @@ public class ProductPojo implements Product, Parcelable {
         dest.writeStringList(images);
     }
 
+    @Override
     public String getEan() {
         return ean;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public String getWeight() {
         return weight;
     }
 
+    @Override
     public String getImage() {
         return images != null && images.size() > 0 ? images.get(0) : "Image Unavailable";
     }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.itrided.android.barracoda.databinding.FragmentProductListBinding;
 
 public class ProductListFragment extends Fragment {
+    public static final String TAG = ProductListFragment.class.getSimpleName();
 
     private FragmentProductListBinding binding;
     private ProductListViewModel productListViewModel;
@@ -35,7 +36,6 @@ public class ProductListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        // get the Recipe from the Activity
         productListViewModel = ViewModelProviders.of(getActivity()).get(ProductListViewModel.class);
         productListViewModel.getProducts().observe(this, productEntries -> {
             if (productListAdapter == null)
@@ -50,7 +50,6 @@ public class ProductListFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProductListBinding.inflate(inflater, container, false);
 
-        // update the Recipe when a new View is created
         productListAdapter = new ProductListAdapter(productListViewModel.getProducts().getValue());
         binding.productsRv.setAdapter(productListAdapter);
         binding.productsRv.addItemDecoration(new DividerItemDecoration(binding.productsRv.getContext(),

@@ -37,22 +37,27 @@ public class ProductEntry implements Product {
         this.image = product.getImage();
     }
 
+    @Override
     public String getEan() {
         return ean;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public String getWeight() {
         return weight;
     }
 
+    @Override
     public String getImage() {
         return image;
     }

@@ -3,6 +3,7 @@ package com.itrided.android.barracoda;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.itrided.android.barracoda.barcode.BarcodeScanFragment;
 import com.itrided.android.barracoda.databinding.ActivityMainBinding;
 import com.itrided.android.barracoda.databinding.AppBarMainBinding;
 import com.itrided.android.barracoda.products.ProductListFragment;
+import com.itrided.android.barracoda.stores.StoresListFragment;
 
 import java.util.concurrent.TimeUnit;
 
@@ -84,12 +85,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_scan:
-                replaceFragment(BarcodeScanFragment.getInstance());
+                replaceFragment(BarcodeScanFragment.getInstance(), BarcodeScanFragment.TAG);
                 break;
             case R.id.nav_favorite_products:
-                replaceFragment(ProductListFragment.getInstance());
+                replaceFragment(ProductListFragment.getInstance(), ProductListFragment.TAG);
                 break;
             case R.id.nav_favorite_stores:
+                replaceFragment(StoresListFragment.getInstance(), StoresListFragment.TAG);
                 break;
         }
 
@@ -114,14 +116,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
-    private void replaceFragment(@NonNull Fragment fragment) {
+    private void replaceFragment(@NonNull Fragment fragment, @Nullable String tag) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.fragment_placeholder, fragment, fragment.getTag());
-        if (!BarcodeScanFragment.TAG.equals(fragment.getTag())) {
-            Log.d(TAG, "replaceFragment: " + fragment.getTag());
-            transaction.addToBackStack(null);
+        transaction.replace(R.id.fragment_placeholder, fragment, tag);
+        if (!BarcodeScanFragment.TAG.equals(tag)) {
+            transaction.addToBackStack(tag);
         }
         transaction.commit();
     }
