@@ -9,6 +9,7 @@
     <string name="exit_toast">Tap \'Back\' again to exit.</string>
 
     <!-- Permissions -->
+    <string name="give_permission">Give Permission</string>
     <string name="no_permission_title">Permission not granted.</string>
     <string name="permission_camera_rationale">Access to the camera is needed for barcode detection.</string>
     <string name="no_camera_permission">This application needs the camera permission in order to run properly.</string>
@@ -31,5 +32,4 @@
     <!-- Stores -->
     <string name="google_privacy_policy">http://www.google.com/policies/privacy</string>
     <string name="no_location_permission_message">You need to enable location permissions first.</string>
-
 </resources>

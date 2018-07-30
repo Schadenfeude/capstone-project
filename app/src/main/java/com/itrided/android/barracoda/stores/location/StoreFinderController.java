@@ -13,9 +13,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,12 +31,9 @@ import com.itrided.android.barracoda.data.BarraCodaDb;
 import com.itrided.android.barracoda.data.model.db.Store;
 import com.itrided.android.barracoda.permissions.PermissionManager;
 import com.itrided.android.barracoda.stores.StoreListAdapter;
+import com.itrided.android.barracoda.stores.StoreListViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class StoreFinderController implements LifecycleObserver,
         GoogleApiClient.ConnectionCallbacks,
@@ -54,13 +50,14 @@ public class StoreFinderController implements LifecycleObserver,
     private final BarraCodaDb barraCodaDb = BarraCodaApp.getDatabaseInstance();
     private final StoreListAdapter adapter;
 
-    private LiveData<List<Store>> stores;
+    private StoreListViewModel storeListViewModel;
 
     public StoreFinderController(Fragment fragment, StoreListAdapter adapter) {
         this.context = fragment.getContext();
         this.activity = fragment.getActivity();
         this.fragment = fragment;
         this.adapter = adapter;
+        this.storeListViewModel = ViewModelProviders.of(fragment).get(StoreListViewModel.class);
 
         if (!PermissionManager.checkPermission(context, PermissionManager.Permission.FINE_LOCATION)) {
             PermissionManager.requestPermission(fragment, PermissionManager.Permission.FINE_LOCATION);
@@ -94,7 +91,7 @@ public class StoreFinderController implements LifecycleObserver,
         if (!PermissionManager.checkPermission(context, PermissionManager.Permission.FINE_LOCATION)) {
             final Snackbar snackbar = Snackbar
                     .make(view, R.string.no_location_permission_message, Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Give Permission", v -> PermissionManager.requestPermission(
+                    .setAction(R.string.give_permission, v -> PermissionManager.requestPermission(
                             fragment, PermissionManager.Permission.FINE_LOCATION));
 
             snackbar.show();
@@ -115,12 +112,11 @@ public class StoreFinderController implements LifecycleObserver,
     }
 
     private void refreshStoreData() {
-        loadSavedStores();
         setupResultObserver();
     }
 
     private void setupResultObserver() {
-        stores.observe(fragment, storesList -> {
+        storeListViewModel.getStores().observe(fragment, storesList -> {
             if (adapter == null || storesList == null || storesList.isEmpty()) {
                 return;
             }
@@ -137,17 +133,9 @@ public class StoreFinderController implements LifecycleObserver,
         });
     }
 
-    private void loadSavedStores() {
-        stores = LiveDataReactiveStreams.fromPublisher(
-                barraCodaDb.storeModel().getAllStores()
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread()));
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void disconnectClient() {
         if (googleClient.isConnected()) {
-            Log.d(TAG, "disconnectClient: ");
             googleClient.disconnect();
         }
     }
@@ -155,7 +143,6 @@ public class StoreFinderController implements LifecycleObserver,
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void connectClient() {
         if (!googleClient.isConnected()) {
-            Log.d(TAG, "connectClient: ");
             googleClient.connect();
         }
     }

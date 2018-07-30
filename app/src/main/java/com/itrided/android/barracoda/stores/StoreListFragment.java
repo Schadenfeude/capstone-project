@@ -3,7 +3,8 @@ package com.itrided.android.barracoda.stores;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +26,9 @@ import com.itrided.android.barracoda.data.model.db.Store;
 import com.itrided.android.barracoda.databinding.FragmentStoreListBinding;
 import com.itrided.android.barracoda.permissions.PermissionManager;
 import com.itrided.android.barracoda.stores.location.StoreFinderController;
+import com.itrided.android.barracoda.ui.SwipeToDeleteCallback;
 
 import io.reactivex.Completable;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
@@ -40,6 +43,7 @@ public class StoreListFragment extends Fragment {
     private FragmentStoreListBinding binding;
     private StoreFinderController storeController;
     private StoreListAdapter storeListAdapter;
+    private StoreListViewModel storeListViewModel;
 
     public StoreListFragment() {
     }
@@ -56,6 +60,8 @@ public class StoreListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        storeListViewModel = ViewModelProviders.of(this).get(StoreListViewModel.class);
         storeListAdapter = new StoreListAdapter();
         storeController = new StoreFinderController(this, storeListAdapter);
         getLifecycle().addObserver(storeController);
@@ -65,7 +71,9 @@ public class StoreListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentStoreListBinding.inflate(inflater, container, false);
+        final ItemTouchHelper ith = new ItemTouchHelper(getSwipeHandler(this.getContext()));
 
+        ith.attachToRecyclerView(binding.storesRv);
         binding.storesRv.setAdapter(storeListAdapter);
         binding.storesRv.addItemDecoration(new DividerItemDecoration(binding.storesRv.getContext(),
                 LinearLayoutManager.VERTICAL));
@@ -121,5 +129,26 @@ public class StoreListFragment extends Fragment {
                 })
                 .subscribeOn(Schedulers.io())
                 .subscribe();
+    }
+
+    private void deleteStore(@NonNull String storeId) {
+        Completable.create(
+                emitter -> {
+                    BarraCodaApp.getDatabaseInstance().storeModel().deleteStore(new Store(storeId));
+                    emitter.onComplete();
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
+    private SwipeToDeleteCallback getSwipeHandler(@NonNull Context context) {
+        return new SwipeToDeleteCallback(context) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                final Store store = storeListViewModel.getStoresValue().get(position);
+                deleteStore(store.getStoreId());
+            }
+        };
     }
 }
