@@ -1,5 +1,6 @@
 package com.itrided.android.barracoda;
 
+import android.animation.ValueAnimator;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -14,12 +15,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.itrided.android.barracoda.barcode.BarcodeScanFragment;
 import com.itrided.android.barracoda.databinding.ActivityMainBinding;
 import com.itrided.android.barracoda.databinding.AppBarMainBinding;
 import com.itrided.android.barracoda.products.ProductListFragment;
+import com.itrided.android.barracoda.products.product.ProductDetailFragment;
 import com.itrided.android.barracoda.stores.StoreListFragment;
 
 import java.util.concurrent.TimeUnit;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding activityMainBinding;
     private AppBarMainBinding appBarMainBinding;
+    private ActionBarDrawerToggle drawerToggle;
+
+    private boolean isBackFromDetails = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         appBarMainBinding = activityMainBinding.appBarScan;
 
+        fragmentManager.addOnBackStackChangedListener(getBackStackChangedListener());
         activityMainBinding.navView.setNavigationItemSelectedListener(this);
         activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_SCAN.ordinal()).setChecked(true);
         setSupportActionBar(appBarMainBinding.toolbar);
@@ -80,13 +87,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else if (fragmentManager.getBackStackEntryCount() == 0) {
             backButtonClickSource.onNext(true);
+        } else if (isBackFromDetails) {
+            onBackFromProductDetails();
         } else {
             syncSelectedNavItem();
             super.onBackPressed();
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -125,11 +133,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupDrawerToggle() {
-        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawerToggle = new ActionBarDrawerToggle(
                 this, activityMainBinding.drawerLayout, appBarMainBinding.toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        activityMainBinding.drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        activityMainBinding.drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
     }
 
     private void launchScanFragment() {
@@ -167,5 +175,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .skip(1)
                 .filter(interval -> interval.time() < EXIT_TIMEOUT)
                 .subscribe(interval -> finish()));
+    }
+
+    private FragmentManager.OnBackStackChangedListener getBackStackChangedListener() {
+        return () -> {
+            final int lastIndex = fragmentManager.getBackStackEntryCount() - 1;
+            if (lastIndex < 0) {
+                return;
+            }
+            final FragmentManager.BackStackEntry lastEntry = fragmentManager.getBackStackEntryAt(lastIndex);
+
+            if (ProductDetailFragment.TAG.equals(lastEntry.getName())) {
+                onProductDetailsOpen();
+            }
+        };
+    }
+
+    private void onProductDetailsOpen() {
+        isBackFromDetails = true;
+        animateBurgerToArrow(0, 1);
+        appBarMainBinding.toolbar.setNavigationOnClickListener(v -> onBackFromProductDetails());
+        activityMainBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    private void onBackFromProductDetails() {
+        isBackFromDetails = false;
+        super.onBackPressed();
+        animateBurgerToArrow(1, 0);
+        appBarMainBinding.toolbar.setNavigationOnClickListener(null);
+
+        setupDrawerToggle();
+        activityMainBinding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    private void animateBurgerToArrow(int start, int end) {
+        final ValueAnimator anim = ValueAnimator.ofFloat(start, end);
+        anim.addUpdateListener(valueAnimator -> {
+            float slideOffset = (Float) valueAnimator.getAnimatedValue();
+            drawerToggle.onDrawerSlide(activityMainBinding.drawerLayout, slideOffset);
+        });
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(500);
+        anim.start();
     }
 }
