@@ -2,6 +2,7 @@ package com.itrided.android.barracoda;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -31,15 +32,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final int NAV_ITEM_SCAN = 0;
     private static final long EXIT_TIMEOUT = 2000;
+
+    private enum NAV_ITEMS {
+        NAV_ITEM_SCAN,
+        NAV_ITEM_PRODUCTS,
+        NAV_ITEM_STORES
+    }
+
     private CompositeDisposable compositeDisposable;
     private PublishSubject<Boolean> backButtonClickSource = PublishSubject.create();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     private ActivityMainBinding activityMainBinding;
     private AppBarMainBinding appBarMainBinding;
-
-    //TODO pop fragments onDestroy... manage fragment lifecycle better
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         appBarMainBinding = activityMainBinding.appBarScan;
 
         activityMainBinding.navView.setNavigationItemSelectedListener(this);
-        activityMainBinding.navView.getMenu().getItem(NAV_ITEM_SCAN).setChecked(true);
+        activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_SCAN.ordinal()).setChecked(true);
         setSupportActionBar(appBarMainBinding.toolbar);
         setupDrawerToggle();
         launchScanFragment();
@@ -72,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+        } else if (fragmentManager.getBackStackEntryCount() == 0) {
             backButtonClickSource.onNext(true);
         } else {
+            syncSelectedNavItem();
             super.onBackPressed();
         }
     }
@@ -90,15 +97,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 replaceFragment(BarcodeScanFragment.getInstance(), BarcodeScanFragment.TAG);
                 break;
             case R.id.nav_favorite_products:
-                replaceFragment(ProductListFragment.getInstance(), ProductListFragment.TAG);
+                replaceFragment(new ProductListFragment(), ProductListFragment.TAG);
                 break;
             case R.id.nav_favorite_stores:
-                replaceFragment(StoreListFragment.getInstance(), StoreListFragment.TAG);
+                replaceFragment(new StoreListFragment(), StoreListFragment.TAG);
                 break;
         }
 
         activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void syncSelectedNavItem() {
+        @IdRes final int id = appBarMainBinding.fragmentPlaceholder.getId();
+
+        switch (id) {
+            case R.id.nav_scan:
+                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_SCAN.ordinal()).setChecked(true);
+                break;
+            case R.id.nav_favorite_products:
+                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_PRODUCTS.ordinal()).setChecked(true);
+                break;
+            case R.id.nav_favorite_stores:
+                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_STORES.ordinal()).setChecked(true);
+                break;
+        }
     }
 
     private void setupDrawerToggle() {
@@ -110,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void launchScanFragment() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         final BarcodeScanFragment barcodeScanFragment = BarcodeScanFragment.getInstance();
 
@@ -119,7 +141,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void replaceFragment(@NonNull Fragment fragment, @Nullable String tag) {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment.isAdded()) {
+            return;
+        }
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         transaction.replace(R.id.fragment_placeholder, fragment, tag);

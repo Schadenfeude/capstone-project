@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,12 @@ import com.itrided.android.barracoda.data.BarraCodaDb;
 import com.itrided.android.barracoda.data.model.Product;
 import com.itrided.android.barracoda.data.model.db.ProductEntry;
 import com.itrided.android.barracoda.databinding.FragmentProductDetailBinding;
+import com.itrided.android.barracoda.ui.DisposableFragment;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ProductDetailFragment extends Fragment {
+public class ProductDetailFragment extends DisposableFragment {
 
     public static final String TAG = ProductDetailFragment.class.getSimpleName();
 

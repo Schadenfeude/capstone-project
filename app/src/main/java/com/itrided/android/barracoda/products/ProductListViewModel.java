@@ -35,10 +35,6 @@ public class ProductListViewModel extends ViewModel {
         return products.getValue();
     }
 
-//    public List<? extends Product> getProductsValue() {
-//        return products.getValue();
-//    }
-
     public LiveData<List<ProductEntry>> getProducts() {
         return products;
     }

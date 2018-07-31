@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +25,7 @@ import com.itrided.android.barracoda.data.model.db.Store;
 import com.itrided.android.barracoda.databinding.FragmentStoreListBinding;
 import com.itrided.android.barracoda.permissions.PermissionManager;
 import com.itrided.android.barracoda.stores.location.StoreFinderController;
+import com.itrided.android.barracoda.ui.DisposableFragment;
 import com.itrided.android.barracoda.ui.SwipeToDeleteCallback;
 
 import io.reactivex.Completable;
@@ -36,7 +36,7 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static com.itrided.android.barracoda.permissions.PermissionManager.RC_HANDLE_PERM;
 import static com.itrided.android.barracoda.stores.location.StoreFinderController.RC_PLACE_PICKER;
 
-public class StoreListFragment extends Fragment {
+public class StoreListFragment extends DisposableFragment {
 
     public static final String TAG = StoreListFragment.class.getSimpleName();
 
@@ -44,18 +44,6 @@ public class StoreListFragment extends Fragment {
     private StoreFinderController storeController;
     private StoreListAdapter storeListAdapter;
     private StoreListViewModel storeListViewModel;
-
-    public StoreListFragment() {
-    }
-
-    private static StoreListFragment INSTANCE = null;
-
-    public static StoreListFragment getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new StoreListFragment();
-        }
-        return INSTANCE;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
