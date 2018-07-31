@@ -3,6 +3,14 @@ An app that allows you to scan products’ barcodes and gives you information ab
 It also allows you to mark your favorite stores on the map so you know where to go to buy
 the cheapest and best quality products.
 
+## IMPORTANT
+To be able to run this app you need an **API key** for Google Maps. To create your key go to
+ [this page](https://developers.google.com/maps/documentation/embed/get-api-key#detailed-guide) 
+ and follow the instructions in the **Detailed Guide to getting an API key** section. 
+ After you create your key open your project's `gradle.properties` file and add the following line:
+
+ `MapsApiKey = {YOUR_KEY}`
+
 ## PROJECT SPECIFICATION
 ### Common Project Requirements
  - [x] App conforms to common standards found in the Android Nanodegree General Project Guidelines
