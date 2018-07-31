@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         transaction.replace(R.id.fragment_placeholder, fragment, tag);
         if (!BarcodeScanFragment.TAG.equals(tag)) {
             transaction.addToBackStack(tag);

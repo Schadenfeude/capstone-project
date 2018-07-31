@@ -101,6 +101,7 @@ public class BarcodeScanFragment extends Fragment {
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         final ProductDetailFragment productDetailFragment = new ProductDetailFragment();
 
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         transaction.replace(R.id.fragment_placeholder, productDetailFragment, ProductDetailFragment.TAG);
         transaction.addToBackStack(ProductDetailFragment.TAG);
         transaction.commit();
