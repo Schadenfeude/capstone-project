@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/recipe_choose_label_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/horizontal_margin"
+                android:text="@string/widget_config_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@+id/recipe_choose_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/recipe_choose_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/horizontal_margin"
+                app:layout_constraintBottom_toTopOf="@+id/recipe_ok_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_choose_label_tv"/>
+
+        <Button
+                android:id="@+id/recipe_ok_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/horizontal_margin"
+                android:text="@android:string/ok"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_choose_spinner"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

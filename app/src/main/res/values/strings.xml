@@ -33,4 +33,7 @@
     <!-- Stores -->
     <string name="google_privacy_policy">http://www.google.com/policies/privacy</string>
     <string name="no_location_permission_message">You need to enable location permissions first.</string>
+    <string name="widget_config_label">Choose a product to display.</string>
+    <string name="widget_product_title">Information for %1$s</string>
+    <string name="widget_product_item_text">%1$s\\n%2$s %3$s</string>
 </resources>

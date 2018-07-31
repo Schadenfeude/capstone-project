@@ -7,7 +7,7 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/activity_vertical_margin">
+            android:padding="@dimen/vertical_margin">
 
         <ImageView
                 android:id="@+id/image"
@@ -17,7 +17,7 @@
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true"
                 android:elevation="4dp"
-                android:layout_margin="@dimen/activity_vertical_margin"
+                android:layout_margin="@dimen/vertical_margin"
                 app:layout_constraintDimensionRatio="H,16:9"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/horizontal_div"
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:padding="@dimen/activity_horizontal_margin"
+                android:padding="@dimen/horizontal_margin"
                 app:layout_constraintTop_toBottomOf="@id/image"
                 app:layout_constraintBottom_toTopOf="@id/label_name"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
                 android:id="@+id/label_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/horizontal_margin"
                 app:layout_constraintTop_toBottomOf="@id/horizontal_div"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/name"
@@ -64,7 +64,7 @@
                 android:id="@+id/label_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/horizontal_margin"
                 app:layout_constraintTop_toBottomOf="@id/label_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/description"
@@ -86,7 +86,7 @@
                 android:id="@+id/label_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_description"
                 app:layout_constraintEnd_toStartOf="@id/price"
@@ -108,7 +108,7 @@
                 android:id="@+id/fab_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_vertical_margin"
+                android:layout_margin="@dimen/vertical_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_favorite_border"/>
