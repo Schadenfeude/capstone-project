@@ -11,9 +11,9 @@ import com.itrided.android.barracoda.data.model.Product;
 import java.util.List;
 
 public class ProductPojo implements Product, Parcelable {
-    @SerializedName("ean")
+    @SerializedName("upcnumber")
     @Expose
-    private String ean;
+    private String id;
 
     @SerializedName("title")
     @Expose
@@ -23,20 +23,15 @@ public class ProductPojo implements Product, Parcelable {
     @Expose
     private String description;
 
-    @SerializedName("weight")
+    @SerializedName("msrp")
     @Expose
-    private String weight;
-
-    @SerializedName("images")
-    @Expose
-    private List<String> images;
+    private String price;
 
     protected ProductPojo(Parcel in) {
-        ean = in.readString();
+        id = in.readString();
         name = in.readString();
         description = in.readString();
-        weight = in.readString();
-        images = in.createStringArrayList();
+        price = in.readString();
     }
 
     public static final Creator<ProductPojo> CREATOR = new Creator<ProductPojo>() {
@@ -58,16 +53,15 @@ public class ProductPojo implements Product, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(ean);
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeString(description);
-        dest.writeString(weight);
-        dest.writeStringList(images);
+        dest.writeString(price);
     }
 
     @Override
-    public String getEan() {
-        return ean;
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -81,21 +75,15 @@ public class ProductPojo implements Product, Parcelable {
     }
 
     @Override
-    public String getWeight() {
-        return weight;
-    }
-
-    @Override
-    public String getImage() {
-        return images != null && images.size() > 0 ? images.get(0) : "Image Unavailable";
+    public String getPrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        return "ean: " + ean +
+        return "ean: " + id +
                 "\ntitle: " + name +
                 "\ndescription: " + description +
-                "\nweight: " + weight +
-                "\nimage: " + images.get(0);
+                "\nweight: " + price;
     }
 }

@@ -13,5 +13,5 @@ public interface BackupBarcodeService {
     String productLookupURL = "product/{id}/" + BuildConfig.UPCDB_API_KEY;
 
     @GET(productLookupURL)
-    Single<ResponseBody> getProductBackup(@Path("id") @NonNull String barcode);
+    Single<ResponseBody> getProduct(@Path("id") @NonNull String barcode);
 }

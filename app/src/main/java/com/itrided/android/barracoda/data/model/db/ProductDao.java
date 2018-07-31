@@ -18,8 +18,8 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface ProductDao {
 
-    @Query("SELECT * FROM ProductEntry WHERE ean = :ean")
-    Single<ProductEntry> getProduct(String ean);
+    @Query("SELECT * FROM ProductEntry WHERE id = :id")
+    Single<ProductEntry> getProduct(String id);
 
     @Query("SELECT * FROM ProductEntry")
     Flowable<List<ProductEntry>> getAllProducts();

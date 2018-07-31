@@ -1,11 +1,13 @@
 package com.itrided.android.barracoda.products;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.itrided.android.barracoda.R;
 import com.itrided.android.barracoda.data.model.Product;
 import com.itrided.android.barracoda.databinding.ItemProductListBinding;
 
@@ -15,8 +17,10 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
 
     private ArrayList<Product> products;
+    private Context context;
 
-    public ProductListAdapter(@Nullable List<? extends Product> products) {
+    public ProductListAdapter(Context context, @Nullable List<? extends Product> products) {
+        this.context = context;
         this.products = new ArrayList<>();
         if (products != null) {
             this.products.addAll(products);
@@ -34,7 +38,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
-        productViewHolder.bind(products.get(position));
+        productViewHolder.bind(context, products.get(position));
     }
 
     @Override
@@ -56,9 +60,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             this.binding = binding;
         }
 
-        void bind(@NonNull Product product) {
+        void bind(Context context, @NonNull Product product) {
+            final String price = String.format(context.getResources().getString(R.string.price_format), product.getPrice());
+
             binding.nameTv.setText(product.getName());
-            binding.priceTv.setText(product.getWeight());
+            binding.priceTv.setText(price);
+//            binding.storeTv.setText();
         }
     }
 }

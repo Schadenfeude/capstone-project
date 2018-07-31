@@ -11,35 +11,31 @@ public class ProductEntry implements Product {
 
     @PrimaryKey
     @NonNull
-    private String ean;
+    private String id;
 
     private String name;
 
     private String description;
 
-    private String weight;
+    private String price;
 
-    private String image;
-
-    public ProductEntry(@NonNull String ean, String name, String description, String weight, String image) {
-        this.ean = ean;
+    public ProductEntry(@NonNull String id, String name, String description, String price) {
+        this.id = id;
         this.name = name;
         this.description = description;
-        this.weight = weight;
-        this.image = image;
+        this.price = price;
     }
 
     public ProductEntry(Product product) {
-        this.ean = product.getEan();
+        this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();
-        this.weight = product.getWeight();
-        this.image = product.getImage();
+        this.price = product.getPrice();
     }
 
     @Override
-    public String getEan() {
-        return ean;
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -53,22 +49,16 @@ public class ProductEntry implements Product {
     }
 
     @Override
-    public String getWeight() {
-        return weight;
-    }
-
-    @Override
-    public String getImage() {
-        return image;
+    public String getPrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        return "ean: " + ean +
+        return "id: " + id +
                 "\ntitle: " + name +
                 "\ndescription: " + description +
-                "\nweight: " + weight +
-                "\nimage: " + image;
+                "\nprice: " + price;
     }
 }
 

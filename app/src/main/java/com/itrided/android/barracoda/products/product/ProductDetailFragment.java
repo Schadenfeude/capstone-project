@@ -55,10 +55,11 @@ public class ProductDetailFragment extends Fragment {
             if (product == null) {
                 return;
             }
-//            binding.image
+            final String price = String.format(getResources().getString(R.string.price_format), product.getPrice());
+
             binding.name.setText(product.getName());
             binding.description.setText(product.getDescription());
-            binding.weight.setText(product.getWeight());
+            binding.price.setText(price);
             setupFab();
         });
     }
@@ -73,7 +74,7 @@ public class ProductDetailFragment extends Fragment {
 
     private void setupFabState(BarraCodaDb barraCodaDb, Product product) {
         disposable.add(
-                barraCodaDb.productModel().getProduct(product.getEan())
+                barraCodaDb.productModel().getProduct(product.getId())
                         .subscribeOn(Schedulers.io())
                         .subscribe(
                                 productEntry -> binding.fabFavorite.setImageResource(R.drawable.ic_favorite),
@@ -82,7 +83,7 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private View.OnClickListener getFavoriteClickListener(BarraCodaDb barraCodaDb, Product product) {
-        return v -> barraCodaDb.productModel().getProduct(product.getEan())
+        return v -> barraCodaDb.productModel().getProduct(product.getId())
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                         productEntry -> {

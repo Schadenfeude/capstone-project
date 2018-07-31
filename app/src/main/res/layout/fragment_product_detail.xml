@@ -83,23 +83,23 @@
                 android:text="@string/information_unavailable"/>
 
         <TextView
-                android:id="@+id/label_weight"
+                android:id="@+id/label_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_description"
-                app:layout_constraintEnd_toStartOf="@id/weight"
+                app:layout_constraintEnd_toStartOf="@id/price"
                 style="@style/AppTheme.ProductLabel"
-                android:text="@string/label_weight"/>
+                android:text="@string/label_price"/>
 
         <TextView
-                android:id="@+id/weight"
+                android:id="@+id/price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/label_weight"
-                app:layout_constraintBottom_toBottomOf="@id/label_weight"
-                app:layout_constraintStart_toEndOf="@id/label_weight"
+                app:layout_constraintTop_toTopOf="@id/label_price"
+                app:layout_constraintBottom_toBottomOf="@id/label_price"
+                app:layout_constraintStart_toEndOf="@id/label_price"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/AppTheme.ProductDescription"
                 android:text="@string/information_unavailable"/>

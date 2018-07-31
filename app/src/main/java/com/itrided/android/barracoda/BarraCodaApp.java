@@ -25,8 +25,8 @@ public class BarraCodaApp extends Application {
     private static final String BACKUP_BARCODE_SERVICE_BASE_URL = "https://api.upcdatabase.org/";
 
     private static Gson gsonService;
+    private static Gson backupGsonService;
     private static BarcodeService barcodeService;
-    //todo implement
     private static BackupBarcodeService backupBarcodeService;
     private static BarraCodaDb barraCodaDb;
 
@@ -35,8 +35,16 @@ public class BarraCodaApp extends Application {
         super.onCreate();
 
         barcodeService = createBarcodeService();
+        backupBarcodeService = createBackupBarcodeService();
+
         gsonService = createGsonService();
+        backupGsonService = createBackupGsonService();
         barraCodaDb = BarraCodaDb.getInstance(getApplicationContext());
+    }
+
+    private static Gson createBackupGsonService() {
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+                .create();
     }
 
     public static BarraCodaDb getDatabaseInstance() {
@@ -49,6 +57,14 @@ public class BarraCodaApp extends Application {
 
     public static Gson getGsonService() {
         return gsonService;
+    }
+
+    public static Gson getBackupGsonService() {
+        return backupGsonService;
+    }
+
+    public static BackupBarcodeService getBackupBarcodeService() {
+        return backupBarcodeService;
     }
 
     private static Gson createGsonService() {
@@ -64,6 +80,15 @@ public class BarraCodaApp extends Application {
                 .build();
 
         return retrofit.create(BarcodeService.class);
+    }
+
+    private static BackupBarcodeService createBackupBarcodeService() {
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BACKUP_BARCODE_SERVICE_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build();
+
+        return retrofit.create(BackupBarcodeService.class);
     }
 
     private static class BarcodeJsonDeserializer<T> implements JsonDeserializer<T> {

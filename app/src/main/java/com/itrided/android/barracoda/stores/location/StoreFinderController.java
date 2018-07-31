@@ -46,11 +46,10 @@ public class StoreFinderController implements LifecycleObserver,
     private final Context context;
     private final Fragment fragment;
     private final Activity activity;
-    private final GoogleApiClient googleClient;
-    private final BarraCodaDb barraCodaDb = BarraCodaApp.getDatabaseInstance();
-    private final StoreListAdapter adapter;
 
-    private StoreListViewModel storeListViewModel;
+    private final GoogleApiClient googleClient;
+    private final StoreListAdapter adapter;
+    private final StoreListViewModel storeListViewModel;
 
     public StoreFinderController(Fragment fragment, StoreListAdapter adapter) {
         this.context = fragment.getContext();
@@ -73,7 +72,6 @@ public class StoreFinderController implements LifecycleObserver,
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.d(TAG, "onConnected: ");
         refreshStoreData();
     }
 

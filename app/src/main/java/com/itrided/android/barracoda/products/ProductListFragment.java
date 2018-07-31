@@ -58,7 +58,7 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProductListBinding.inflate(inflater, container, false);
-        productListAdapter = new ProductListAdapter(productListViewModel.getProducts().getValue());
+        productListAdapter = new ProductListAdapter(this.getContext(), productListViewModel.getProducts().getValue());
         final ItemTouchHelper ith = new ItemTouchHelper(getSwipeHandler(this.getContext()));
 
         ith.attachToRecyclerView(binding.productsRv);

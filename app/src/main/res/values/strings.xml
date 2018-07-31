@@ -16,14 +16,15 @@
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage.</string>
 
     <!-- Barcode -->
-    <string name="barcode_detector_error">Could not set up the detector.</string>
-    <string name="barcode_failure">No barcode captured.</string>
-    <string name="barcode_error">Error reading barcode: %1$s</string>
-    <string name="information_unavailable">Information unavailable</string>
     <string name="nav_scan_barcode">Scan Barcode</string>
+    <string name="information_unavailable">Information unavailable</string>
+    <string name="no_upc_db_key">Forbidden. Are you using an API authentication token?</string>
+    <string name="invalid_upc">Bad Request. The code you are trying to enter does not contain all digits.</string>
+    <string name="upc_not_found">Product not found.</string>
 
     <!-- Products -->
-    <string name="label_weight">Weight:</string>
+    <string name="price_format">$%1$s</string>
+    <string name="label_price">Price:</string>
     <string name="label_description">Description:</string>
     <string name="label_name">Name:</string>
     <string name="nav_favorite_products">Favorite Products</string>

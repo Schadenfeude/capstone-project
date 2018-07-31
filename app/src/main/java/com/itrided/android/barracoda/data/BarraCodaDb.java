@@ -11,7 +11,7 @@ import com.itrided.android.barracoda.data.model.db.ProductDao;
 import com.itrided.android.barracoda.data.model.db.Store;
 import com.itrided.android.barracoda.data.model.db.StoreDao;
 
-@Database(entities = {ProductEntry.class, Store.class}, version = 2)
+@Database(entities = {ProductEntry.class, Store.class}, version = 3)
 public abstract class BarraCodaDb extends RoomDatabase {
 
     private static final String DATABASE_NAME = "BARRA_CODA_DB";

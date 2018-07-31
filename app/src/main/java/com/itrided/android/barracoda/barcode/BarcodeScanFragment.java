@@ -7,12 +7,14 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.itrided.android.barracoda.BarraCodaApp;
 import com.itrided.android.barracoda.R;
@@ -20,6 +22,7 @@ import com.itrided.android.barracoda.data.model.api.ProductPojo;
 import com.itrided.android.barracoda.databinding.FragmentScanBinding;
 import com.itrided.android.barracoda.products.product.ProductDetailFragment;
 import com.itrided.android.barracoda.products.product.ProductViewModel;
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -48,7 +51,7 @@ public class BarcodeScanFragment extends Fragment {
     private CompositeDisposable disposable;
     private PublishSubject<Barcode> barcodes = PublishSubject.create();
     private Observable<ResponseBody> apiProductObservable = barcodes
-            .switchMapSingle(barcode -> BarraCodaApp.getBarcodeService().getProduct(barcode.rawValue));
+            .switchMapSingle(barcode -> BarraCodaApp.getBackupBarcodeService().getProduct(barcode.rawValue));
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,14 +113,33 @@ public class BarcodeScanFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     final String resultJson = result.string();
-                    final ProductPojo product = BarraCodaApp.getGsonService()
+                    final ProductPojo product = BarraCodaApp.getBackupGsonService()
                             .fromJson(resultJson, ProductPojo.class);
 
                     productViewModel.setProduct(product);
                     launchDetailFragment();
                 }, e -> {
-                    e.printStackTrace();
-                    launchDetailFragment();
+                    final HttpException exception = (HttpException) e;
+                    handleExceptions(exception);
+                    registerBarcodeResultReceiver();
                 }));
+    }
+
+    private void handleExceptions(HttpException error) {
+        switch (error.code()) {
+            case 404:
+                showDialog(R.string.upc_not_found);
+                break;
+            case 403:
+                showDialog(R.string.no_upc_db_key);
+                break;
+            case 400:
+                showDialog(R.string.invalid_upc);
+                break;
+        }
+    }
+
+    private void showDialog(@StringRes int string) {
+        Toast.makeText(this.getContext(), string, Toast.LENGTH_LONG).show();
     }
 }
