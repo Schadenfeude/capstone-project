@@ -4,12 +4,22 @@ It also allows you to mark your favorite stores on the map so you know where to 
 the cheapest and best quality products.
 
 ## IMPORTANT
-To be able to run this app you need an **API key** for Google Maps. To create your key go to
+To be able to run this app properly, you will need an **API key** for Google Maps and UPC Database. 
+ - To create your Google Maps key go to 
  [this page](https://developers.google.com/maps/documentation/embed/get-api-key#detailed-guide) 
  and follow the instructions in the **Detailed Guide to getting an API key** section. 
- After you create your key open your project's `gradle.properties` file and add the following line:
+ - To create your UPC Database key go to [this page](http://upcdatabase.org/signup) and sign up. 
+ After you do, log into your account, go to the **API Access** setting (to your left) and create a new
+ API token.
+ 
+ After you create your keys open your project's `gradle.properties` file and add the following lines:
 
  `MapsApiKey = {YOUR_KEY}`
+ 
+ `UpcDbApiKey = {YOUR_KEY}`
+ 
+ #### Note:
+ If the products you wish to scan are not in the database you can add them via [this link](http://upcdatabase.org/add).
 
 ## PROJECT SPECIFICATION
 ### Common Project Requirements
