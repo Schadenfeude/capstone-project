@@ -31,8 +31,12 @@ public class ProductListViewModel extends ViewModel {
         compositeDisposable.dispose();
     }
 
-//    public void addProduct(@NonNull Product product) {
-//        this.products.getValue().add(product);
+    public List<ProductEntry> getProductsValue() {
+        return products.getValue();
+    }
+
+//    public List<? extends Product> getProductsValue() {
+//        return products.getValue();
 //    }
 
     public LiveData<List<ProductEntry>> getProducts() {
