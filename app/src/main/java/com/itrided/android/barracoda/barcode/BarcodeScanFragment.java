@@ -120,9 +120,13 @@ public class BarcodeScanFragment extends Fragment {
                     productViewModel.setProduct(product);
                     launchDetailFragment();
                 }, e -> {
-                    final HttpException exception = (HttpException) e;
-                    handleExceptions(exception);
-                    registerBarcodeResultReceiver();
+                    if (e instanceof HttpException) {
+                        final HttpException exception = (HttpException) e;
+                        handleExceptions(exception);
+                        registerBarcodeResultReceiver();
+                    } else {
+                        showDialog(R.string.unknown_error);
+                    }
                 }));
     }
 

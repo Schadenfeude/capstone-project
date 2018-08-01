@@ -34,6 +34,7 @@
     <string name="no_upc_db_key">Forbidden. Are you using an API authentication token?</string>
     <string name="invalid_upc">Bad Request. The code you are trying to enter does not contain all digits.</string>
     <string name="upc_not_found">Product not found.</string>
+    <string name="unknown_error">Unknown error occurred.</string>
 
     <!-- Products -->
     <string name="price_format">$%1$s</string>
