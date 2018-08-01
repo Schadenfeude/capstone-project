@@ -20,6 +20,13 @@ To be able to run this app properly, you will need an **API key** for Google Map
  
  #### Note:
  If the products you wish to scan are not in the database you can add them via [this link](http://upcdatabase.org/add).
+ 
+To be able to generate and install a signed release version of the app, add the following lines to your
+`local.properties` file:
+
+`ks.pwd=baraikoda`
+
+`key.pwd=baramkoda`
 
 ## PROJECT SPECIFICATION
 ### Common Project Requirements

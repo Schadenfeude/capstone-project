@@ -5,6 +5,13 @@ apply plugin: 'com.android.application'
 def UPCDB_API_KEY = '"' + UpcDbApiKey + '"' ?: '"Missing UpcDbApiKey key, please refer to the README.md file for insructions!"'
 //**********************************//
 
+ext {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    ksPass = properties.getProperty('ks.pwd')
+    keyPass = properties.getProperty('key.pwd')
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion '28.0.1'
@@ -27,10 +34,25 @@ android {
         manifestPlaceholders.MAPS_API_KEY = MapsApiKey
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../keystore.jks')
+            storePassword ksPass
+            keyAlias "barra_coda_key"
+            keyPassword keyPass
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
         }
     }
 
