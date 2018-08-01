@@ -34,7 +34,7 @@ To be able to run this app properly, you will need an **API key** for Google Map
  - [ ] App includes support for accessibility. That includes content descriptions, navigation using a D-pad,
   and, if applicable, non-audio versions of audio cues.
  - [x] App keeps all strings in a strings.xml file and enables RTL layout switching on all layouts. 
- - [ ] App provides a widget to provide relevant information to the user on the home screen.
+ - [x] App provides a widget to provide relevant information to the user on the home screen.
  
 ### Google Play Services
  - [x] App integrates two or more Google services. Google service integrations can be a part of 
@@ -52,7 +52,7 @@ To be able to run this app properly, you will need an **API key** for Google Map
 ### Material Design
  - [x] App theme extends AppCompat.
  - [x] App uses an app bar and associated toolbars.
- - [ ] App uses standard and simple transitions between activities.
+ - [x] App uses standard and simple transitions between activities.
  
 ### Building
  - [x] App builds from a clean repository checkout with no additional configuration.
@@ -64,7 +64,7 @@ To be able to run this app properly, you will need an **API key** for Google Map
 ### Data Persistence
  - [x] App stores data locally either by implementing a ContentProvider OR using Firebase Realtime 
  Database OR using Room. No third party frameworks nor Persistence Libraries may be used.
- - [ ] Must implement at least one of the three
+ - [x] Must implement at least one of the three
        If it regularly pulls or sends data to/from a web service or API, app updates data in its 
        cache at regular intervals using a SyncAdapter or JobDispacter.
        OR

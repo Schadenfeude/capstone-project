@@ -1,6 +1,7 @@
 package com.itrided.android.barracoda;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -30,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
+
+import static com.itrided.android.barracoda.widget.ProductWidget.EXTRA_WIDGET_REQUESTED_PRODUCT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(appBarMainBinding.toolbar);
         setupDrawerToggle();
         launchScanFragment();
+
+        final Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_WIDGET_REQUESTED_PRODUCT)) {
+            replaceFragment(new ProductListFragment(), ProductListFragment.TAG);
+        }
     }
 
     @Override

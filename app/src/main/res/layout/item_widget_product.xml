@@ -8,12 +8,13 @@
         android:orientation="vertical">
 
     <TextView
-            android:id="@+id/ingredient_tv"
+            android:id="@+id/product_tv"
             android:padding="@dimen/vertical_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/product_subtitle_size"
             android:textColor="@color/colorAccentLight"
             style="@style/TextAppearance.AppCompat.Body1"
-            tools:text="Cocoa \n100 GR" />
+            tools:text="Description: Refreshing IPA
+            \nPrice: $3.00" />
 </LinearLayout>

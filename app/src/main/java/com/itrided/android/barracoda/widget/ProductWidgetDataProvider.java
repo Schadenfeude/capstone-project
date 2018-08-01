@@ -18,12 +18,12 @@ public class ProductWidgetDataProvider implements RemoteViewsService.RemoteViews
 
     private int appWidgetId;
     private Context context;
-    private ArrayList<String> ingredients;
+    private ArrayList<String> productInfo;
 
     public ProductWidgetDataProvider(Context context, Intent intent) {
         this.context = context;
         this.appWidgetId = intent.getIntExtra(EXTRA_WIDGET_ID, 0);
-        this.ingredients = intent.getStringArrayListExtra(EXTRA_WIDGET_PRODUCT);
+        this.productInfo = intent.getStringArrayListExtra(EXTRA_WIDGET_PRODUCT);
     }
 
     @Override
@@ -43,19 +43,20 @@ public class ProductWidgetDataProvider implements RemoteViewsService.RemoteViews
 
     @Override
     public int getCount() {
-        return ingredients == null ? 0 : ingredients.size();
+        return productInfo == null ? 0 : productInfo.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.item_widget_product);
-        final CharSequence recipeName = ProductWidgetConfigureActivity
-                .loadRecipePreference(context, appWidgetId);
+        final CharSequence productName = ProductWidgetConfigureActivity
+                .loadProductPreference(context, appWidgetId);
         final Intent intent = new Intent(context, ProductListFragment.class);
 
-        intent.putExtra(EXTRA_WIDGET_REQUESTED_PRODUCT, recipeName);
-        remoteViews.setTextViewText(R.id.ingredient_tv, ingredients.get(position));
-        remoteViews.setOnClickFillInIntent(R.id.ingredient_tv, intent);
+        intent.putExtra(EXTRA_WIDGET_REQUESTED_PRODUCT, productName);
+        remoteViews.setOnClickFillInIntent(R.id.product_tv, intent);
+
+        remoteViews.setTextViewText(R.id.product_tv, productInfo.get(position));
 
         return remoteViews;
     }

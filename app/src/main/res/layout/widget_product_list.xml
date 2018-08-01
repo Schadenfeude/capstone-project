@@ -7,17 +7,17 @@
         android:orientation="vertical">
 
     <TextView
-            android:id="@+id/recipe_name_tv"
+            android:id="@+id/product_name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/vertical_margin"
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/colorAccent"
             style="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Yellow Cake Ingredients"/>
+            tools:text="BEVOG Kramah IPA"/>
 
     <ListView
-            android:id="@+id/recipe_list_lv"
+            android:id="@+id/product_list_lv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryLight"
