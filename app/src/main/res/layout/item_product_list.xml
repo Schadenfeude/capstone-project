@@ -22,6 +22,7 @@
                     android:background="@color/colorPrimaryDark"
                     android:scaleType="centerInside"
                     android:adjustViewBounds="true"
+                    android:contentDescription="@string/product_image_desc"
                     app:layout_constraintDimensionRatio="H,16:9"
                     app:layout_constraintEnd_toStartOf="@id/vertical_guide"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +45,7 @@
                     android:textAppearance="@style/AppTheme.ProductLabel"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:contentDescription="@string/product_name_desc"
                     app:layout_constraintTop_toTopOf="@id/image"
                     app:layout_constraintStart_toEndOf="@+id/vertical_guide"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +58,7 @@
                     android:layout_marginStart="8dp"
                     android:textAppearance="@style/AppTheme.BodyText"
                     android:maxLines="1"
+                    android:contentDescription="@string/product_price_desc"
                     app:layout_constraintTop_toBottomOf="@id/name_tv"
                     app:layout_constraintStart_toEndOf="@+id/vertical_guide"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -68,10 +71,11 @@
                     android:layout_marginStart="8dp"
                     android:textAppearance="@style/AppTheme.BodyText"
                     android:maxLines="1"
+                    android:contentDescription="@string/linked_stores_desc"
                     app:layout_constraintTop_toBottomOf="@id/price_tv"
                     app:layout_constraintStart_toEndOf="@+id/vertical_guide"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="No linked stores"/>
+                    android:text="@string/no_linked_stores"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

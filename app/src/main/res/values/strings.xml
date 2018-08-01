@@ -1,12 +1,25 @@
 <resources>
     <!-- General -->
     <string name="app_name">BarraCoda</string>
-    <string name="ok">@android:string/ok</string>
-    <string name="cancel">@android:string/cancel</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="exit_toast">Tap \'Back\' again to exit.</string>
+
+    <!-- Content Description -->
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="app_toolbar_desc">App Toolbar</string>
+    <string name="product_image_desc">Product Image</string>
+    <string name="product_name_desc">Product Name</string>
+    <string name="product_description_desc">Product Description</string>
+    <string name="favorites_desc">Add to Favorites</string>
+    <string name="product_price_desc">Product Price</string>
+    <string name="product_list_desc">Product List</string>
+    <string name="store_list_desc">Store List</string>
+    <string name="add_store_desc">Add new Store</string>
+    <string name="privacy_desc">Google Privacy Policy</string>
+    <string name="linked_stores_desc">Linked Stores</string>
+    <string name="store_image_desc">Store Image</string>
+    <string name="store_name_desc">Store Name</string>
 
     <!-- Permissions -->
     <string name="give_permission">Give Permission</string>
@@ -33,6 +46,7 @@
     <!-- Stores -->
     <string name="google_privacy_policy">http://www.google.com/policies/privacy</string>
     <string name="no_location_permission_message">You need to enable location permissions first.</string>
+    <string name="no_linked_stores">No linked stores</string>
 
     <!-- Widget -->
     <string name="widget_config_label">Choose a product to display.</string>
