@@ -4,6 +4,13 @@ It also allows you to mark your favorite stores on the map so you know where to 
 the cheapest and best quality products.
 
 ## IMPORTANT
+To be able to generate and install a **signed release version** of the app, add the following lines to your
+`local.properties` file:
+
+`ks.pwd=baraikoda`
+
+`key.pwd=baramkoda`
+
 To be able to run this app properly, you will need an **API key** for Google Maps and UPC Database. 
  - To create your Google Maps key go to 
  [this page](https://developers.google.com/maps/documentation/embed/get-api-key#detailed-guide) 
@@ -20,13 +27,6 @@ To be able to run this app properly, you will need an **API key** for Google Map
  
  #### Note:
  If the products you wish to scan are not in the database you can add them via [this link](http://upcdatabase.org/add).
- 
-To be able to generate and install a signed release version of the app, add the following lines to your
-`local.properties` file:
-
-`ks.pwd=baraikoda`
-
-`key.pwd=baramkoda`
 
 ## PROJECT SPECIFICATION
 ### Common Project Requirements
