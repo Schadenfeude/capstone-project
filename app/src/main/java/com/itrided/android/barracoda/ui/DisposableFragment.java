@@ -18,7 +18,12 @@ public abstract class DisposableFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        fragmentManager.popBackStack(getTag(), POP_BACK_STACK_INCLUSIVE);
+        try {
+            fragmentManager.popBackStack(getTag(), POP_BACK_STACK_INCLUSIVE);
+        } catch (IllegalStateException e) {
+            // do nothing
+        }
+
         super.onDestroy();
     }
 }

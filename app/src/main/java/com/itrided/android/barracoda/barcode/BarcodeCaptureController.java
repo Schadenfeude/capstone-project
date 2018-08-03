@@ -132,7 +132,11 @@ public final class BarcodeCaptureController implements LifecycleObserver,
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     protected void onDestroy() {
         if (preview != null) {
-            preview.release();
+            try {
+                preview.release();
+            } catch (NullPointerException e) {
+                // do nothing
+            }
         }
     }
     //endregion API Methods
