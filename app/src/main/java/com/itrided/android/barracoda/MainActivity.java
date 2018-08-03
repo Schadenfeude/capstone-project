@@ -17,7 +17,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
 
 import com.itrided.android.barracoda.barcode.BarcodeScanFragment;
 import com.itrided.android.barracoda.databinding.ActivityMainBinding;
@@ -26,19 +25,11 @@ import com.itrided.android.barracoda.products.ProductListFragment;
 import com.itrided.android.barracoda.products.product.ProductDetailFragment;
 import com.itrided.android.barracoda.stores.StoreListFragment;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.subjects.PublishSubject;
-
 import static com.itrided.android.barracoda.widget.ProductWidget.EXTRA_WIDGET_REQUESTED_PRODUCT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    private static final long EXIT_TIMEOUT = 2000;
 
     private enum NAV_ITEMS {
         NAV_ITEM_SCAN,
@@ -46,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NAV_ITEM_STORES
     }
 
-    private CompositeDisposable compositeDisposable;
-    private PublishSubject<Boolean> backButtonClickSource = PublishSubject.create();
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     private ActivityMainBinding activityMainBinding;
@@ -78,13 +67,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        createDoubleTapToExitListener();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        compositeDisposable.dispose();
     }
 
     @Override
@@ -93,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (fragmentManager.getBackStackEntryCount() == 0) {
-            backButtonClickSource.onNext(true);
         } else if (isBackFromDetails) {
             onBackFromProductDetails();
         } else {
@@ -172,18 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction.addToBackStack(tag);
         }
         transaction.commit();
-    }
-
-    private void createDoubleTapToExitListener() {
-        compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(backButtonClickSource
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(event -> Toast.makeText(this, R.string.exit_toast, Toast.LENGTH_SHORT).show())
-                .timeInterval(TimeUnit.MILLISECONDS)
-                .skip(1)
-                .filter(interval -> interval.time() < EXIT_TIMEOUT)
-                .subscribe(interval -> finish()));
     }
 
     private FragmentManager.OnBackStackChangedListener getBackStackChangedListener() {
