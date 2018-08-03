@@ -4,7 +4,6 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private enum NAV_ITEMS {
-        NAV_ITEM_SCAN,
-        NAV_ITEM_PRODUCTS,
-        NAV_ITEM_STORES
+    private enum Navigation {
+        SCAN,
+        PRODUCTS,
+        STORES
     }
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager.addOnBackStackChangedListener(getBackStackChangedListener());
         activityMainBinding.navView.setNavigationItemSelectedListener(this);
-        activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_SCAN.ordinal()).setChecked(true);
+        activityMainBinding.navView.getMenu().getItem(Navigation.SCAN.ordinal()).setChecked(true);
         setSupportActionBar(appBarMainBinding.toolbar);
         setupDrawerToggle();
         launchScanFragment();
@@ -83,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (isBackFromDetails) {
             onBackFromProductDetails();
         } else {
-            syncSelectedNavItem();
             super.onBackPressed();
         }
     }
@@ -107,22 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         activityMainBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void syncSelectedNavItem() {
-        @IdRes final int id = appBarMainBinding.fragmentPlaceholder.getId();
-
-        switch (id) {
-            case R.id.nav_scan:
-                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_SCAN.ordinal()).setChecked(true);
-                break;
-            case R.id.nav_favorite_products:
-                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_PRODUCTS.ordinal()).setChecked(true);
-                break;
-            case R.id.nav_favorite_stores:
-                activityMainBinding.navView.getMenu().getItem(NAV_ITEMS.NAV_ITEM_STORES.ordinal()).setChecked(true);
-                break;
-        }
     }
 
     private void setupDrawerToggle() {
