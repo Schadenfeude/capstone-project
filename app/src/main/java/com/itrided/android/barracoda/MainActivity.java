@@ -64,16 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onBackPressed() {
         final DrawerLayout drawer = activityMainBinding.drawerLayout;
 
