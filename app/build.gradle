@@ -6,12 +6,10 @@ def UPCDB_API_KEY = '"' + UpcDbApiKey + '"' ?: '"Missing UpcDbApiKey key, please
 //**********************************//
 
 ext {
-//    Properties properties = new Properties()
-//    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//    ksPass = properties.getProperty('ks.pwd')
-//    keyPass = properties.getProperty('key.pwd')
-    ksPass = 'baraikoda'
-    keyPass = 'baramkoda'
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    ksPass = properties.getProperty('ks.pwd')
+    keyPass = properties.getProperty('key.pwd')
 }
 
 android {
